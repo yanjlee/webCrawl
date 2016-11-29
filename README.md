@@ -1,5 +1,4 @@
-the webCrawl
+出于对爬虫的热爱，自学Python
 ==========
-#do some test
-----------
-#this is other one
+python 接触 urllib,urllib2,HTMLParser,xpath,requests 
+开始接触scrapy框架
