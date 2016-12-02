@@ -36,7 +36,7 @@ class theComment():
         cookies = r.cookies
         self.session.cookies.update(r.cookies)
         # 初始化mongoDB
-        dbName = self.connection.Douban
+        dbName = self.connection.Douban1
         self.post = dbName.MovieComment
         return self.modifyForGetMovieInfo(r)
 
@@ -85,19 +85,22 @@ class theComment():
         pag_num = new_selector.xpath('//*[@id="content"]/div/div[1]/div[2]/a[10]/text()')[0]
         the_urls = []
         for i in range(int(pag_num)):
-            the_urls.append(self.new_url +"start=" + str(i*20))
+            the_urls.append(self.new_url +"?start=" + str(i*20))
         #开始多线程
         pool = Pool(4)
-        result = Pool(self.getTheComment, the_urls)
+        pool.map(self.getTheComment, the_urls)
+        print '采集完毕'
         #多线程结束关闭
-        result.close()
+
         pool.close()
 
 
-    def getTheComment(self, r):
+    def getTheComment(self, url):
         '''发现每个评论都是对应ID，然后在json里可以提取出全部的内容'''
+        print url
+        html = self.session.get(url)
         comment = {}
-        selector = etree.HTML(r.content)
+        selector = etree.HTML(html.text)
         theMain = selector.xpath('//div[@class="main review-item"]')
         for eachCmt in theMain:
             eachID = eachCmt.xpath('@id')[0]
@@ -112,7 +115,7 @@ class theComment():
             self.post.insert(comment)
             comment = {}
 
-        print '采集完毕'
+
 
 
 
