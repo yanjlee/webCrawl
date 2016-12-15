@@ -25,7 +25,9 @@ class getAllColleges():
             user='root',
             passwd='454647',
             db='college_info',
-            charset="utf8" #不然要报错 UnicodeEncodeError: 'latin-1' codec can't encode characters in position 130-133: ordinal not in range(256)
+            charset="utf8"  #此处一定要
+        '''不然要报错:
+        UnicodeEncodeError: 'latin-1' codec can't encode characters in position 130-133: ordinal not in range(256)'''
         )
         return self.getAllColleges(r.content)
     def getAllColleges(self, content):
@@ -46,13 +48,14 @@ class getAllColleges():
                 schoolname = jsDict[i]['schoolname']                #校名
                 f985 = jsDict[i]['f985']                            #非985
                 f211 = jsDict[i]['f211']                            #非211
-                thelevel = jsDict[i]['level']                          #层次 本科/专科
+                thelevel = jsDict[i]['level']                       #层次 本科/专科
                 schooltype = jsDict[i]['schooltype']                #学校类型
                 membership = jsDict[i]['membership']                #隶属于
                 schoolproperty = jsDict[i]['schoolproperty']        #性质
                 shoufei = jsDict[i]['shoufei']                      #收费
                 jianjie = jsDict[i]['jianjie']                      #学校简介
-                SQL = 'insert into all_college (schoolid,schoolname,f985,f211,thelevel,schooltype,membership,schoolproperty,shoufei,jianjie)' \
+                SQL = 'insert into all_college (schoolid,schoolname,f985,f211,thelevel,schooltype,' \
+                      'membership,schoolproperty,shoufei,jianjie)' \
                   'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'\
                   %(schoolid,schoolname,f985,f211,thelevel,schooltype,membership,schoolproperty,shoufei,jianjie)
                 cur.execute(SQL)
