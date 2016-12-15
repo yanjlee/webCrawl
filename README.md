@@ -3,6 +3,7 @@
 ###python 接触 urllib,urllib2,HTMLParser,xpath,requests 
 ###开始接触scrapy框架
 
+####16.12.15 接活，实战
 ####16.12.12 今天生日，看Python web基础
 ####16.12.11 复习基础
 ####16.12.11 练习正则表达式，为爬取国家统计网做准备
