@@ -40,9 +40,13 @@ class admissionLine():
                         }
         self.session = requests.session()
     def setupsession(self):
-        r = self.session.get('http://gkcx.eol.cn/',headers=self.headers)
-        cookies = r.cookies
-        self.session.cookies.update(cookies)
+        try:
+            r = self.session.get('http://gkcx.eol.cn/',headers=self.headers)
+            cookies = r.cookies
+            self.session.cookies.update(cookies)
+        except:
+            print 'set up session 这里错误'
+
         #建立mysql链接
         self.conn = MySQLdb.connect(
             host='localhost',
@@ -55,6 +59,7 @@ class admissionLine():
         self.cur = self.conn.cursor()
         self.cur.execute('select count(*) from all_college')
         self.total_school = self.cur.fetchone()[0]
+        self.urls = []
         return self.getUrl()
 
     def getUrl(self):
@@ -64,87 +69,90 @@ class admissionLine():
             self.conn.commit()
             print '开始采集, id= ',schoolid
             self.getEachProvince_url(schoolid)
-
         self.conn.close()
     def getEachProvince_url(self,schoolid):
-        url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(schoolid) + '/schoolAreaPoint.htm'
-        selector = etree.HTML(self.session.get(url, headers=self.headers).content)
-        province = selector.xpath('//div[@class="S_result"]/table[@id="tableList"]/tr')
-        print 'id= ',schoolid,'的url'
-        for each_url in province:
-            name = each_url.xpath('td[1]/text()')
-            if name:
-                province_name = name[0]
-            wen_line = each_url.xpath('td[2]/a/@href')
-            if wen_line:
-                wen_url = 'http://gkcx.eol.cn/' + wen_line[0]
-                self.getData(wen_url, province_name, schoolid)
-            li_line = each_url.xpath('td[3]/a/@href')
-            if wen_line:
-                li_url = 'http://gkcx.eol.cn/' + li_line[0]
-                self.getData(li_url, province_name, schoolid)
-            zong_line = each_url.xpath('td[4]/a/@href')
-            if wen_line:
-                zong_url = 'http://gkcx.eol.cn/' + li_line[0]
-                self.getData(zong_url, province_name, schoolid)
-            yi_line = each_url.xpath('td[5]/a/@href')
-            if yi_line:
-                yi_url = 'http://gkcx.eol.cn/' + li_line[0]
-                self.getData(yi_url, province_name, schoolid)
-            ti_line = each_url.xpath('td[6]/a/@href')
-            if ti_line:
-                ti_url = 'http://gkcx.eol.cn/' + li_line[0]
-                self.getData(ti_url, province_name, schoolid)
-
+        try:
+            url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(schoolid) + '/schoolAreaPoint.htm'
+            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            province = selector.xpath('//div[@class="S_result"]/table[@id="tableList"]/tr')
+            print 'id= ',schoolid,'的url'
+            for each_url in province:
+                name = each_url.xpath('td[1]/text()')
+                if name:
+                    province_name = name[0]
+                wen_line = each_url.xpath('td[2]/a/@href')
+                if wen_line:
+                    wen_url = 'http://gkcx.eol.cn/' + wen_line[0]
+                    self.getData(wen_url, province_name, schoolid)
+                li_line = each_url.xpath('td[3]/a/@href')
+                if li_line:
+                    li_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    self.getData(li_url, province_name, schoolid)
+                zong_line = each_url.xpath('td[4]/a/@href')
+                if wen_line:
+                    zong_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    self.getData(zong_url, province_name, schoolid)
+                yi_line = each_url.xpath('td[5]/a/@href')
+                if yi_line:
+                    yi_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    self.getData(yi_url, province_name, schoolid)
+                ti_line = each_url.xpath('td[6]/a/@href')
+                if ti_line:
+                    ti_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    self.getData(ti_url, province_name, schoolid)
+        except:
+            self.urls.append(url)
 
     def getData(self, url, name, schoolid):
-        selector = etree.HTML(self.session.get(url, headers=self.headers).content)
-        info = selector.xpath('//div[@class="Scores"]/div[@class="S_result"]/table/tr')
-        for each_info in info:
-            year = each_info.xpath('td[1]/text()')
-            if year:
-                year = year[0]
-            else :
-                year = ''
+        try:
+            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            info = selector.xpath('//div[@class="Scores"]/div[@class="S_result"]/table/tr')
+            for each_info in info:
+                year = each_info.xpath('td[1]/text()')
+                if year:
+                    year = year[0]
+                else :
+                    year = ''
 
-            max = each_info.xpath('td[2]/text()')
-            if max:
-                max = max[0]
-            else:
-                max = ''
+                max = each_info.xpath('td[2]/text()')
+                if max:
+                    max = max[0]
+                else:
+                    max = ''
 
-            ave = each_info.xpath('td[3]/text()')
-            if ave:
-                ave = ave[0]
-            else:
-                ave = ''
+                ave = each_info.xpath('td[3]/text()')
+                if ave:
+                    ave = ave[0]
+                else:
+                    ave = ''
 
-            line = each_info.xpath('td[4]/text()')
-            if line:
-                line = line[0]
-            else:
-                line = ''
+                line = each_info.xpath('td[4]/text()')
+                if line:
+                    line = line[0]
+                else:
+                    line = ''
 
-            s_type = each_info.xpath('td[5]/text()')
-            if s_type:
-                s_type = s_type[0]
-            else:
-                s_type = ''
+                s_type = each_info.xpath('td[5]/text()')
+                if s_type:
+                    s_type = s_type[0]
+                else:
+                    s_type = ''
 
-            admission_type = each_info.xpath('td[6]/text()')
-            if admission_type:
-                admission_type = admission_type[0]
-            else:
-                admission_type = ''
+                admission_type = each_info.xpath('td[6]/text()')
+                if admission_type:
+                    admission_type = admission_type[0]
+                else:
+                    admission_type = ''
 
             #然后录入表中
-            if year != '':
-                SQL = 'insert into admission_line(schoolid,年份,省份,最高分,平均分,省控线,考生类别,录取批次)values' \
-                  '(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'\
-                  %(schoolid, year, name, max, ave, line, s_type, admission_type)
-                self.cur.execute(SQL)
-                self.conn.commit()
-
+                if year != '':
+                    SQL = 'insert into admission_line(schoolid,年份,省份,最高分,平均分,省控线,考生类别,录取批次)values' \
+                    '(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'\
+                    %(schoolid, year, name, max, ave, line, s_type, admission_type)
+                    self.cur.execute(SQL)
+                    self.conn.commit()
+        except:
+            self.urls.append(url)
 if __name__ == '__main__':
     c = admissionLine()
     c.setupsession()
