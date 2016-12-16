@@ -45,23 +45,22 @@ class admissionLine():
             r = self.session.get('http://gkcx.eol.cn/',headers=self.headers)
             cookies = r.cookies
             self.session.cookies.update(cookies)
+            # 建立mysql链接
+            self.conn = MySQLdb.connect(
+                host='localhost',
+                port=3306,
+                user='root',
+                passwd='454647',
+                db='college_info',
+                charset="utf8"
+            )
+            self.cur = self.conn.cursor()
+            self.cur.execute('select count(*) from all_college')
+            self.total_school = self.cur.fetchone()[0]
+            self.urls = []
+            return self.getUrl()
         except:
             print 'set up session 这里错误'
-
-        #建立mysql链接
-        self.conn = MySQLdb.connect(
-            host='localhost',
-            port=3306,
-            user='root',
-            passwd='454647',
-            db='college_info',
-            charset="utf8"
-        )
-        self.cur = self.conn.cursor()
-        self.cur.execute('select count(*) from all_college')
-        self.total_school = self.cur.fetchone()[0]
-        self.urls = []
-        return self.getUrl()
 
     def getUrl(self):
         for i in range(int(self.total_school)):

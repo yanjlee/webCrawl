@@ -25,9 +25,7 @@ class getAllColleges():
             user='root',
             passwd='454647',
             db='college_info',
-            charset="utf8"  #此处一定要
-        '''不然要报错:
-        UnicodeEncodeError: 'latin-1' codec can't encode characters in position 130-133: ordinal not in range(256)'''
+            charset="utf8"
         )
         return self.getAllColleges(r.content)
     def getAllColleges(self, content):

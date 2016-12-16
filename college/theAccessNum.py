@@ -55,23 +55,22 @@ class theAccessNum():
             r = self.session.get('http://www.gaokao.com', headers=self.headers)
             cookies = r.cookies
             self.session.cookies.update(cookies)
+            # 建立mysql链接
+            self.conn = MySQLdb.connect(
+                host='localhost',
+                port=3306,
+                user='root',
+                passwd='454647',
+                db='college_info',
+                charset="utf8"
+            )
+            self.cur = self.conn.cursor()
+            self.cur.execute('select count(*) from all_college')
+            self.total_school = self.cur.fetchone()[0]
+            self.urls = []
+            return self.constructUrl()
         except:
             print 'set up session 这里错误'
-
-        #建立mysql链接
-        self.conn = MySQLdb.connect(
-            host='localhost',
-            port=3306,
-            user='root',
-            passwd='454647',
-            db='college_info',
-            charset="utf8"
-        )
-        self.cur = self.conn.cursor()
-        self.cur.execute('select count(*) from all_college')
-        self.total_school = self.cur.fetchone()[0]
-        self.urls = []
-        return self.constructUrl()
 
     def constructUrl(self):
         for each_college in range(2666):
