@@ -155,13 +155,12 @@ class course_line():
             self.urls.append(url)
 
     def getData(self, url, name, schoolid):
-        print '1'
         try:
             selector = etree.HTML(self.session.get(url, headers=self.headers).content)
             info = selector.xpath('//div[@class="Scores"]/div[@class="S_result"]/table/tr')
             for each_info in info:
                 if each_info.xpath('td[1]/text()'):
-                    course_name = each_info.xpath('td[1]/text()')[0]
+                    course_name = each_info.xpath('td[1]/text()')[0].replace(' ','')
                 else:
                     course_name = ''
                 if each_info.xpath('td[2]/text()'):
@@ -181,11 +180,11 @@ class course_line():
                 else:
                     min = ''
                 if each_info.xpath('td[6]/text()'):
-                    s_type = each_info.xpath('td[6]/text()')[0].replace(' ','').replace('"','')
+                    s_type = each_info.xpath('td[6]/text()')[0].replace(' ','')
                 else:
                     s_type = ''
                 if each_info.xpath('td[7]/text()'):
-                    admission_type = each_info.xpath('td[7]/text()')[0].replace(' ','').replace('"','')
+                    admission_type = each_info.xpath('td[7]/text()')[0].replace(' ','')
                 else:
                     admission_type = ''
                 #录入表中
