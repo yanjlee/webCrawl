@@ -3,6 +3,7 @@
 import requests
 import MySQLdb
 import random
+import time
 from lxml import etree
 import sys
 reload(sys)
@@ -15,7 +16,7 @@ sys.setrecursionlimit(2000000)
 class admissionLine():
     def __init__(self):
         self.user_agent_list = [ \
-        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1" \
+        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1", \
         "Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11", \
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6", \
         "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6", \
@@ -65,17 +66,20 @@ class admissionLine():
     def getUrl(self):
         for i in range(int(self.total_school)):
             self.cur.execute("select schoolid from all_college where id =" + str(i + 1))
-            schoolid = self.cur.fetchone()[0]
+            self.schoolid = self.cur.fetchone()[0]
             self.conn.commit()
-            print '开始采集, id= ',schoolid
-            self.getEachProvince_url(schoolid)
+            url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(self.schoolid) + '/schoolAreaPoint.htm'
+            self.getEachProvince_url(url)
         self.conn.close()
-    def getEachProvince_url(self,schoolid):
+        print '未抓取的数据有'
+        print self.urls
+    def getEachProvince_url(self,url):
         try:
-            url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(schoolid) + '/schoolAreaPoint.htm'
+            #休眠0.1秒
+            time.sleep(0.1)
             selector = etree.HTML(self.session.get(url, headers=self.headers).content)
             province = selector.xpath('//div[@class="S_result"]/table[@id="tableList"]/tr')
-            print 'id= ',schoolid,'的url'
+            print '采集, id= ',self.schoolid,
             for each_url in province:
                 name = each_url.xpath('td[1]/text()')
                 if name:
@@ -83,25 +87,26 @@ class admissionLine():
                 wen_line = each_url.xpath('td[2]/a/@href')
                 if wen_line:
                     wen_url = 'http://gkcx.eol.cn/' + wen_line[0]
-                    self.getData(wen_url, province_name, schoolid)
+                    self.getData(wen_url, province_name, self.schoolid)
                 li_line = each_url.xpath('td[3]/a/@href')
                 if li_line:
                     li_url = 'http://gkcx.eol.cn/' + li_line[0]
-                    self.getData(li_url, province_name, schoolid)
+                    self.getData(li_url, province_name, self.schoolid)
                 zong_line = each_url.xpath('td[4]/a/@href')
-                if wen_line:
+                if zong_line:
                     zong_url = 'http://gkcx.eol.cn/' + li_line[0]
-                    self.getData(zong_url, province_name, schoolid)
+                    self.getData(zong_url, province_name, self.schoolid)
                 yi_line = each_url.xpath('td[5]/a/@href')
                 if yi_line:
                     yi_url = 'http://gkcx.eol.cn/' + li_line[0]
-                    self.getData(yi_url, province_name, schoolid)
+                    self.getData(yi_url, province_name, self.schoolid)
                 ti_line = each_url.xpath('td[6]/a/@href')
                 if ti_line:
                     ti_url = 'http://gkcx.eol.cn/' + li_line[0]
-                    self.getData(ti_url, province_name, schoolid)
+                    self.getData(ti_url, province_name, self.schoolid)
         except:
-            self.urls.append(url)
+            print '尝试重连, ',url
+            return self.getEachProvince_url(url)
 
     def getData(self, url, name, schoolid):
         try:
@@ -152,7 +157,8 @@ class admissionLine():
                     self.cur.execute(SQL)
                     self.conn.commit()
         except:
-            self.urls.append(url)
+            print '尝试重新链接,',url
+            return self.getData(url, name, schoolid)
 if __name__ == '__main__':
     c = admissionLine()
     c.setupsession()
