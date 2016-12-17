@@ -20,3 +20,8 @@
 ##
 学习python web
 ## 
+
+##
+###在使用多线程抓取数据时候，会出现bug，我使用的 from multiprocessing.dummy import Pool
+###因为在 pool.map()所传递的是一个列表里的元素。当分线程执行时，遇到self.这类的变量就会不知所措.
+##
