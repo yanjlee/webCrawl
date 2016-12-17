@@ -12,6 +12,7 @@ import random
 import MySQLdb
 import time
 from lxml import etree
+from multiprocessing.dummy import Pool
 import sys
 reload(sys)
 
@@ -52,7 +53,7 @@ class theAccessNum():
         self.type = [1, 2, 3, 4, 8, 9]
     def setupsession(self):
         try:
-            r = self.session.get('http://www.gaokao.com', headers=self.headers)
+            r = self.session.get('http://www.gaokao.com', headers=self.headers, timeout= 10)
             cookies = r.cookies
             self.session.cookies.update(cookies)
             # 建立mysql链接
@@ -73,21 +74,19 @@ class theAccessNum():
             print 'set up session 这里错误'
 
     def constructUrl(self):
+        urls = []
         for each_college in range(2666):
             for each_province in self.province:
                 for each_type in self.type:
                     url = 'http://college.gaokao.com/school/tinfo'+ str(each_college) \
                           + '/result/' + str(each_province) + '/' + str(each_type) + '/'
                     self.getData(url)
-
+        print '抓取完毕'
         self.conn.close()
-        print '未抓取的数据有'
-        print self.urls
+
     def getData(self, url):
         try:
-            #休眠0.1秒
-            time.sleep(0.1)
-            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
             content = selector.xpath('//div[@id="wrapper"]/div[@class="cont_l in"]')
             '''
             将 学校+地区+考生类别 同 数据分开。遇到空数据，仍录入 学校+地区+考生类别的 数据.
@@ -131,7 +130,7 @@ class theAccessNum():
                         self.conn.commit()
 
         except:
-            print '尝试重新连接, ',url
+            print 'error,', url
             self.urls.append(url)
 if __name__ == '__main__':
     c =theAccessNum()

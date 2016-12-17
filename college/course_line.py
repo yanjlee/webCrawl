@@ -1,12 +1,9 @@
 # -*- coding:utf-8 -*-
-'''
-处理后的请求，如果发生异常，将继续，知道成立.
-'''
+
 import requests
 import MySQLdb
 import random
 from lxml import etree
-import time
 import sys
 reload(sys)
 
@@ -45,7 +42,7 @@ class course_line():
 
     def setupsession(self):
         try:
-            r = self.session.get('http://gkcx.eol.cn/',headers=self.headers)
+            r = self.session.get('http://gkcx.eol.cn/',headers=self.headers, timeout= 10)
             cookies = r.cookies
             self.session.cookies.update(cookies)
             # 建立mysql链接
@@ -67,22 +64,24 @@ class course_line():
 
 
     def getUrl(self):
+        self.wrong_url = []
         for i in range(int(self.total_school)):
             self.cur.execute("select schoolid from all_college where id =" + str(i + 1))
             self.schoolid = self.cur.fetchone()[0]
             self.conn.commit()
-            print '开始采集, id= ',self.schoolid,'\n'
             url = 'http://gkcx.eol.cn/schoolhtm/schoolSpecailtyMark/' + str(self.schoolid) + '/schoolSpecailtyMark.htm'
+            print url
             self.getEachCourse_url(url)
+            break
         self.conn.close()
-        print '未抓取的数据有'
-        print self.urls
+        print '结束'
+        print self.wrong_url
+
 
     def getEachCourse_url(self, url):
         try:
-            #休眠0.1秒
-            time.sleep(0.1)
-            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            print '开始采集, id= ', self.schoolid, '\n'
+            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
             totalInfo = selector.xpath('//div[@class="S_result"]/table[@id="tableList"]/tr')
             for each_url in totalInfo:
                 if each_url.xpath('td[1]/text()'):
@@ -104,15 +103,14 @@ class course_line():
                             ti_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[6]/a[' + str(year+1) +']/@href')[0]
                             self.getData(ti_url, province_name, self.schoolid)
 
+
         except:
-            print '尝试重新连接, ', url
-            return self.getEachCourse_url(url)
+            print '错误2, ', url
+            self.wrong_url.append(url)
 
     def getData(self, url, name, schoolid):
         try:
-            #休眠0.1秒
-            time.sleep(0.1)
-            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
             info = selector.xpath('//div[@class="Scores"]/div[@class="S_result"]/table/tr')
             for each_info in info:
                 if each_info.xpath('td[1]/text()'):
@@ -136,7 +134,7 @@ class course_line():
                 else:
                     min = ''
                 if each_info.xpath('td[6]/text()'):
-                    s_type = each_info.xpath('td[6]/text()')[0].replace(' ', '')
+                    s_type = each_info.xpath('td[6]/text()')[0].replace(' ','')
                 else:
                     s_type = ''
                 if each_info.xpath('td[7]/text()'):
@@ -144,15 +142,18 @@ class course_line():
                 else:
                     admission_type = ''
                 #录入表中
-                SQL = 'insert into course_line (schoolid,专业名称,年份,省份,平均分,最高分,最低分,考生类别,录取批次)' \
-                      'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\,\'%s\')'\
-                      %(schoolid, course_name, year, name, ave, max, min, s_type, admission_type)
-                if course_name != '':
+                if year != '':
+                    SQL = 'insert into course_line (schoolid,专业名称,年份,省份,平均分,最高分,最低分,考生类别,录取批次)' \
+                          'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
+                          % (schoolid, course_name, year, name, ave, max, min, s_type, admission_type)
+                    print SQL
                     self.cur.execute(SQL)
                     self.conn.commit()
         except:
-            print '尝试重新连接, ', url
-            return self.getData(url, name, schoolid)
+            print '错误3, ', url
+            self.wrong_url.append(url)
+
+
 
 if __name__ == '__main__':
     c = course_line()

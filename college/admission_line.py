@@ -3,7 +3,6 @@
 import requests
 import MySQLdb
 import random
-import time
 from lxml import etree
 import sys
 reload(sys)
@@ -42,7 +41,7 @@ class admissionLine():
         self.session = requests.session()
     def setupsession(self):
         try:
-            r = self.session.get('http://gkcx.eol.cn/',headers=self.headers)
+            r = self.session.get('http://gkcx.eol.cn/',headers=self.headers, timeout= 10)
             cookies = r.cookies
             self.session.cookies.update(cookies)
             # 建立mysql链接
@@ -57,12 +56,12 @@ class admissionLine():
             self.cur = self.conn.cursor()
             self.cur.execute('select count(*) from all_college')
             self.total_school = self.cur.fetchone()[0]
-            self.urls = []
             return self.getUrl()
         except:
             print 'set up session 这里错误'
 
     def getUrl(self):
+        self.urls = []
         for i in range(int(self.total_school)):
             self.cur.execute("select schoolid from all_college where id =" + str(i + 1))
             self.schoolid = self.cur.fetchone()[0]
@@ -70,15 +69,14 @@ class admissionLine():
             url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(self.schoolid) + '/schoolAreaPoint.htm'
             self.getEachProvince_url(url)
         self.conn.close()
-        print '未抓取的数据有'
+        print '失效的链接有'
         print self.urls
+
     def getEachProvince_url(self,url):
         try:
-            #休眠0.1秒
-            time.sleep(0.1)
-            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
             province = selector.xpath('//div[@class="S_result"]/table[@id="tableList"]/tr')
-            print '采集, id= ',self.schoolid,
+            print '采集, id= ',self.schoolid,'\n'
             for each_url in province:
                 name = each_url.xpath('td[1]/text()')
                 if name:
@@ -93,23 +91,24 @@ class admissionLine():
                     self.getData(li_url, province_name, self.schoolid)
                 zong_line = each_url.xpath('td[4]/a/@href')
                 if zong_line:
-                    zong_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    zong_url = 'http://gkcx.eol.cn/' + zong_line[0]
                     self.getData(zong_url, province_name, self.schoolid)
                 yi_line = each_url.xpath('td[5]/a/@href')
                 if yi_line:
-                    yi_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    yi_url = 'http://gkcx.eol.cn/' + yi_line[0]
                     self.getData(yi_url, province_name, self.schoolid)
                 ti_line = each_url.xpath('td[6]/a/@href')
                 if ti_line:
-                    ti_url = 'http://gkcx.eol.cn/' + li_line[0]
+                    ti_url = 'http://gkcx.eol.cn/' + ti_line[0]
                     self.getData(ti_url, province_name, self.schoolid)
         except:
-            print '尝试重连, ',url
-            return self.getEachProvince_url(url)
+            print 'error 1'
+            self.urls.append(url)
+
 
     def getData(self, url, name, schoolid):
         try:
-            selector = etree.HTML(self.session.get(url, headers=self.headers).content)
+            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
             info = selector.xpath('//div[@class="Scores"]/div[@class="S_result"]/table/tr')
             for each_info in info:
                 year = each_info.xpath('td[1]/text()')
@@ -156,8 +155,8 @@ class admissionLine():
                     self.cur.execute(SQL)
                     self.conn.commit()
         except:
-            print '尝试重新链接,',url
-            return self.getData(url, name, schoolid)
+            print 'error 2'
+            self.urls.append(url)
 if __name__ == '__main__':
     c = admissionLine()
     c.setupsession()
