@@ -25,4 +25,7 @@
 ##
 ###在使用多线程抓取数据时候，会出现bug，我使用的 from multiprocessing.dummy import Pool
 ###因为在 pool.map()所传递的是一个列表里的元素。当分线程执行时，遇到self.这类的变量就会不知所措.
+### --------------------------------------------------
+###在定制请求头的时候，Host与网页不同，会发生重定向错误。 比如 host:college.gaokao.com 网页是
+###www.gaokao.com 就会产生错误
 ##
