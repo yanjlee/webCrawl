@@ -75,7 +75,9 @@ class course_line():
             break
         self.conn.close()
         print '结束'
-        print self.wrong_url
+        print '失效的链接有：'
+        for i in self.wrong_url:
+            print i
 
 
     def getEachCourse_url(self, url):
