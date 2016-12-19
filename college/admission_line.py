@@ -70,7 +70,8 @@ class admissionLine():
             self.getEachProvince_url(url)
         self.conn.close()
         print '失效的链接有'
-        print self.urls
+        for i in self.urls:
+            print i
 
     def getEachProvince_url(self,url):
         try:
