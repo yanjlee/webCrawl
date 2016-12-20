@@ -67,50 +67,79 @@ class jiuyeqingkuang():
         #     print i.replace('\n\t\t\t\t','').replace('\n\t\t\t','')
         html_benke = open('benke').read()
         html_zhuanke = open('zhuanke').read()
+        self.ids = []
         course = re.findall('getSpecialities(.*?);return false;', html_benke, re.S)
         for p in course:
             id = re.search('\'(.*?)\'', p, re.S).group(1)
             name = re.search(',\'(.*?)\'\)', p, re.S).group(1)
             self.getData_ben(id, name)
-            time.sleep(1)
+            time.sleep(2)
 
         course_zhuan = re.findall('getSpecialities(.*?);return false;', html_zhuanke, re.S)
         for p in course_zhuan:
             id = re.search('\'(.*?)\'', p, re.S).group(1)
             name = re.search(',\'(.*?)\'\)', p, re.S).group(1)
             self.getData_zhuan(id, name)
-            time.sleep(1)
+            time.sleep(2)
 
         print '抓取完毕'
         self.conn.close()
-
+        print '失效的链接有:'
+        for i in self.ids:
+            print i
 
     def getData_ben(self, id, name):
-        url = 'http://gaokao.chsi.com.cn/sch/jy/query.do?method=showJyxxById'
-        data = {'id': id}
-        type = '本科'
-        selector = etree.HTML(self.session.post(url, data=data).content)
-        sid = selector.xpath('//table/tr[1]/td[2]/text()')[0]
-        rate = selector.xpath('//table/tr[3]/td[2]/text()')[0]
-        num = selector.xpath('//table/tr[4]/td[2]/text()')[0]
-        SQL = 'insert into jiuyeqingkuang(层次,专业代码,专业名称,就业率区间,毕业生规模)' \
-              'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'%(type, sid, name, rate, num)
-        self.cur.execute(SQL)
-        self.conn.commit()
-
+        try:
+            url = 'http://gaokao.chsi.com.cn/sch/jy/query.do?method=showJyxxById'
+            data = {'id': id}
+            type = '本科'
+            selector = etree.HTML(self.session.post(url, data=data).content)
+            sid = selector.xpath('//table/tr[1]/td[2]/text()')[0]
+            rate = selector.xpath('//table/tr[3]/td[2]/text()')[0]
+            num = selector.xpath('//table/tr[4]/td[2]/text()')[0]
+            SQL = 'insert into jiuyeqingkuang(层次,专业代码,专业名称,就业率区间,毕业生规模)' \
+                'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'%(type, sid, name, rate, num)
+            self.cur.execute(SQL)
+            self.conn.commit()
+        except:
+            print 'error...ben',id
+            self.ids.append(id)
     def getData_zhuan(self, id, name):
-        url = 'http://gaokao.chsi.com.cn/sch/jy/query.do?method=showJyxxById'
-        data = {'id': id}
-        type = '专科'
-        selector = etree.HTML(self.session.post(url, data=data).content)
-        sid = selector.xpath('//table/tr[1]/td[2]/text()')[0]
-        rate = selector.xpath('//table/tr[3]/td[2]/text()')[0]
-        num = selector.xpath('//table/tr[4]/td[2]/text()')[0]
-        SQL = 'insert into jiuyeqingkuang(层次,专业代码,专业名称,就业率区间,毕业生规模)' \
-              'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'%(type, sid, name, rate, num)
-        self.cur.execute(SQL)
-        self.conn.commit()
+        try:
+            url = 'http://gaokao.chsi.com.cn/sch/jy/query.do?method=showJyxxById'
+            data = {'id': id}
+            type = '专科'
+            selector = etree.HTML(self.session.post(url, data=data).content)
+            sid = selector.xpath('//table/tr[1]/td[2]/text()')[0]
+            rate = selector.xpath('//table/tr[3]/td[2]/text()')[0]
+            num = selector.xpath('//table/tr[4]/td[2]/text()')[0]
+            SQL = 'insert into jiuyeqingkuang(层次,专业代码,专业名称,就业率区间,毕业生规模)' \
+                'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'%(type, sid, name, rate, num)
+            self.cur.execute(SQL)
+            self.conn.commit()
+        except:
+            print 'error...zhuan',id
+            self.ids.append(id)
+    def ex(self):
+        ids = [375126822, 375126470, 375126688, 375126453]
+        for id in ids:
+            url = 'http://gaokao.chsi.com.cn/sch/jy/query.do?method=showJyxxById'
+            data = {'id': id}
+            type = '专科'
+            r = self.session.post(url, data=data).content
+            print r
+            name = raw_input('输入看到的 专业名称 ')
+            selector = etree.HTML(r)
+            sid = selector.xpath('//table/tr[1]/td[2]/text()')[0]
+            rate = selector.xpath('//table/tr[3]/td[2]/text()')[0]
+            num = selector.xpath('//table/tr[4]/td[2]/text()')[0]
+            SQL = 'insert into jiuyeqingkuang(层次,专业代码,专业名称,就业率区间,毕业生规模)' \
+                'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' % (type, sid, name, rate, num)
+            self.cur.execute(SQL)
+            self.conn.commit()
 
 if __name__ == '__main__':
     c = jiuyeqingkuang()
-    c.getAllIds()
+    # c.getAllIds()
+    #处理失效的链接
+    c.ex()
