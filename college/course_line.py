@@ -3,6 +3,7 @@
 import requests
 import MySQLdb
 import random
+import time
 from lxml import etree
 import sys
 reload(sys)
@@ -66,13 +67,15 @@ class course_line():
     def getUrl(self):
         self.wrong_url = []
         for i in range(int(self.total_school)):
+            print '第', i + 1, '所学校'
             self.cur.execute("select schoolid from all_college where id =" + str(i + 1))
             self.schoolid = self.cur.fetchone()[0]
             self.conn.commit()
             url = 'http://gkcx.eol.cn/schoolhtm/schoolSpecailtyMark/' + str(self.schoolid) + '/schoolSpecailtyMark.htm'
-            print url
             self.getEachCourse_url(url)
-            break
+            time.sleep(1)
+            self.conn.commit()
+
         self.conn.close()
         print '结束'
         print '失效的链接有：'
@@ -82,12 +85,13 @@ class course_line():
 
     def getEachCourse_url(self, url):
         try:
-            print '开始采集, id= ', self.schoolid, '\n'
+            print 'id= ', self.schoolid, '\n'
             selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
             totalInfo = selector.xpath('//div[@class="S_result"]/table[@id="tableList"]/tr')
             for each_url in totalInfo:
                 if each_url.xpath('td[1]/text()'):
-                    province_name =  each_url.xpath('td[1]/text()')[0].replace(' ', '')
+                    province_name =  each_url.xpath('td[1]/text()')[0].replace('\r\n                           ', '')\
+                        .replace('\r\n                     ', '')
                     for year in range(4):
                         if each_url.xpath('td[2]/a[' + str(year+1) +']/@href'):
                             li_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[2]/a[' + str(year+1) +']/@href')[0]
@@ -105,10 +109,9 @@ class course_line():
                             ti_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[6]/a[' + str(year+1) +']/@href')[0]
                             self.getData(ti_url, province_name, self.schoolid)
 
-
         except:
             print '错误2, ', url
-            self.wrong_url.append(url)
+
 
     def getData(self, url, name, schoolid):
         try:
@@ -136,11 +139,15 @@ class course_line():
                 else:
                     min = ''
                 if each_info.xpath('td[6]/text()'):
-                    s_type = each_info.xpath('td[6]/text()')[0].replace(' ','')
+                    s_type = each_info.xpath('td[6]/text()')[0].\
+                        replace('                                                    \r\n                                                        ', '')\
+                        .replace('\r\n                                                    ', '')
                 else:
                     s_type = ''
                 if each_info.xpath('td[7]/text()'):
-                    admission_type = each_info.xpath('td[7]/text()')[0].replace(' ', '')
+                    admission_type = each_info.xpath('td[7]/text()')[0].\
+                    replace('                                                    \r\n                                                        ', '').\
+                    replace('\r\n                                                    ', '')
                 else:
                     admission_type = ''
                 #录入表中
@@ -148,9 +155,8 @@ class course_line():
                     SQL = 'insert into course_line (schoolid,专业名称,年份,省份,平均分,最高分,最低分,考生类别,录取批次)' \
                           'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
                           % (schoolid, course_name, year, name, ave, max, min, s_type, admission_type)
-                    print SQL
                     self.cur.execute(SQL)
-                    self.conn.commit()
+
         except:
             print '错误3, ', url
             self.wrong_url.append(url)

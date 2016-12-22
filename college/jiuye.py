@@ -73,14 +73,14 @@ class jiuyeqingkuang():
             id = re.search('\'(.*?)\'', p, re.S).group(1)
             name = re.search(',\'(.*?)\'\)', p, re.S).group(1)
             self.getData_ben(id, name)
-            time.sleep(2)
+            time.sleep(3)
 
         course_zhuan = re.findall('getSpecialities(.*?);return false;', html_zhuanke, re.S)
         for p in course_zhuan:
             id = re.search('\'(.*?)\'', p, re.S).group(1)
             name = re.search(',\'(.*?)\'\)', p, re.S).group(1)
             self.getData_zhuan(id, name)
-            time.sleep(2)
+            time.sleep(3)
 
         print '抓取完毕'
         self.conn.close()
@@ -121,8 +121,7 @@ class jiuyeqingkuang():
             print 'error...zhuan',id
             self.ids.append(id)
     def ex(self):
-        ids = [375126822, 375126470, 375126688, 375126453]
-        for id in ids:
+        for id in self.ids:
             url = 'http://gaokao.chsi.com.cn/sch/jy/query.do?method=showJyxxById'
             data = {'id': id}
             type = '专科'
@@ -140,6 +139,6 @@ class jiuyeqingkuang():
 
 if __name__ == '__main__':
     c = jiuyeqingkuang()
-    # c.getAllIds()
+    c.getAllIds()
     #处理失效的链接
     c.ex()

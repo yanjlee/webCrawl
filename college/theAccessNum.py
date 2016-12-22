@@ -12,7 +12,6 @@ import random
 import MySQLdb
 import time
 from lxml import etree
-from multiprocessing.dummy import Pool
 import sys
 reload(sys)
 
@@ -74,17 +73,19 @@ class theAccessNum():
             print 'set up session 这里错误'
 
     def constructUrl(self):
-        urls = []
         for each_college in range(2666):
+            print '第', each_college + 1 ,'所学校'
             for each_province in self.province:
                 for each_type in self.type:
                     url = 'http://college.gaokao.com/school/tinfo/'+ str(each_college + 1) \
                           + '/result/' + str(each_province) + '/' + str(each_type) + '/'
                     self.getData(url)
+                time.sleep(1)
+            self.conn.commit()
         print '抓取完毕'
         self.conn.close()
         print '失效的链接有'
-        for wrong_link in urls:
+        for wrong_link in self.urls:
             print wrong_link
 
     def getData(self, url):
@@ -100,12 +101,12 @@ class theAccessNum():
             school_name = selector.xpath('//div[@class="cont_l in"]/p/font[1]/text()')[0]
             area = selector.xpath('//div[@class="cont_l in"]/p/font[2]/text()')[0]
             s_type = selector.xpath('//div[@class="cont_l in"]/p/font[3]/text()')[0]
-
+            print school_name,area,s_type
             if selector.xpath('//div[@class="cont_l in"]/div[@class="ts"]'):
                 # 无数据，返回空的插入
-                SQL = 'insert into access_num(学校名称,地区,考生类别)values(\'%s\',\'%s\',\'%s\')' % (school_name, area, s_type)
+                SQL = 'insert into access_num(学校名称,地区,考生类别,是否为空)values(\'%s\',\'%s\',\'%s\',\'%s\')'\
+                      % (school_name, area, s_type, 1)
                 self.cur.execute(SQL)
-                self.conn.commit()
 
             elif selector.xpath('//div[@class="cont_l in"]/div[@id="pointbyarea"]/table/tr'):
                 # 有数据，采集
@@ -136,11 +137,11 @@ class theAccessNum():
                         admission_type = ''
 
                     if year != '':
-                        SQL = 'insert into access_num(学校名称,地区,考生类别,年份,最低,最高,平均,录取人数,录取批次)' \
-                              'value(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
-                              % (school_name, area, s_type, year, min, max, ave, num, admission_type)
+                        SQL = 'insert into access_num(学校名称,地区,考生类别,年份,最低,最高,平均,录取人数,录取批次,是否为空)' \
+                              'value(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
+                              % (school_name, area, s_type, year, min, max, ave, num, admission_type, 0)
                         self.cur.execute(SQL)
-                        self.conn.commit()
+
 
         except:
             print 'error,', url

@@ -3,6 +3,7 @@
 import requests
 import MySQLdb
 import random
+import time
 from lxml import etree
 import sys
 reload(sys)
@@ -68,6 +69,8 @@ class admissionLine():
             self.conn.commit()
             url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(self.schoolid) + '/schoolAreaPoint.htm'
             self.getEachProvince_url(url)
+            time.sleep(1)
+            self.conn.commit()
         self.conn.close()
         print '失效的链接有'
         for i in self.urls:
@@ -109,15 +112,14 @@ class admissionLine():
 
     def getData(self, url, name, schoolid):
         try:
-            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout= 10).content)
+            selector = etree.HTML(self.session.get(url, headers=self.headers, timeout=10).content)
             info = selector.xpath('//div[@class="Scores"]/div[@class="S_result"]/table/tr')
             for each_info in info:
                 year = each_info.xpath('td[1]/text()')
                 if year:
                     year = year[0]
-                else :
+                else:
                     year = ''
-
                 max = each_info.xpath('td[2]/text()')
                 if max:
                     max = max[0]
@@ -147,17 +149,17 @@ class admissionLine():
                     admission_type = admission_type[0]
                 else:
                     admission_type = ''
+                # 然后录入表中
 
-            #然后录入表中
                 if year != '':
                     SQL = 'insert into admission_line(schoolid,年份,省份,最高分,平均分,省控线,考生类别,录取批次)values' \
-                    '(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'\
-                    %(schoolid, year, name, max, ave, line, s_type, admission_type)
+                          '(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'\
+                          % (schoolid, year, name, max, ave, line, s_type, admission_type)
                     self.cur.execute(SQL)
-                    self.conn.commit()
         except:
-            print 'error 2'
+            print 'error 2',url
             self.urls.append(url)
+
 if __name__ == '__main__':
     c = admissionLine()
     c.setupsession()

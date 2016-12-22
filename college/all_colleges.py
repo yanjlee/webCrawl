@@ -2,7 +2,14 @@
 
 import requests
 import json
+import time
 import MySQLdb
+import sys
+reload(sys)
+
+
+sys.setdefaultencoding('utf-8')
+sys.setrecursionlimit(2000000)
 
 class getAllColleges():
     def __init__(self):
@@ -27,6 +34,7 @@ class getAllColleges():
             db='college_info',
             charset="utf8"
         )
+        self.cur = self.conn.cursor()
         return self.getAllColleges(r.content)
     def getAllColleges(self, content):
 
@@ -40,7 +48,6 @@ class getAllColleges():
             print '第' + str(i+1) +'页'
             jsContent = self.session.get(api + str(i+1)).content
             jsDict = json.loads(jsContent)['school']
-            cur = self.conn.cursor()
             for i in range(len(jsDict)):
                 schoolid = jsDict[i]['schoolid']                    #学校id
                 schoolname = jsDict[i]['schoolname']                #校名
@@ -56,7 +63,10 @@ class getAllColleges():
                       'membership,schoolproperty,shoufei,jianjie)' \
                   'values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')'\
                   %(schoolid,schoolname,f985,f211,thelevel,schooltype,membership,schoolproperty,shoufei,jianjie)
-                cur.execute(SQL)
+                self.cur.execute(SQL)
+                self.conn.commit()
+            time.sleep(1)
+
         print '录入完毕'
         self.conn.commit()
         self.conn.close()
