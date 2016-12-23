@@ -4,6 +4,7 @@ import requests
 import MySQLdb
 import random
 import time
+import re
 from lxml import etree
 import sys
 reload(sys)
@@ -159,7 +160,33 @@ class admissionLine():
         except:
             print 'error 2',url
             self.urls.append(url)
+    def ex(self):
+        r = self.session.get('http://gkcx.eol.cn/', headers=self.headers, timeout=10)
+        cookies = r.cookies
+        self.session.cookies.update(cookies)
+        # 建立mysql链接
+        self.conn = MySQLdb.connect(
+            host='localhost',
+            port=3306,
+            user='root',
+            passwd='454647',
+            db='college_info',
+            charset="utf8"
+        )
+        self.cur = self.conn.cursor()
+        self.urls = []
+        text = open('demo').read().decode('utf-8')
+        college_list = re.findall('/schoolAreaPoint/(.*?)/', text, re.S)
+        for self.schoolid in college_list:
+            url = 'http://gkcx.eol.cn/schoolhtm/schoolAreaPoint/' + str(self.schoolid) + '/schoolAreaPoint.htm'
+            self.getEachProvince_url(url)
+            time.sleep(1)
+            self.conn.commit()
+        print '失效的链接有'
+        for i in self.urls:
+            print i
 
 if __name__ == '__main__':
     c = admissionLine()
-    c.setupsession()
+    # c.setupsession()
+    c.ex()

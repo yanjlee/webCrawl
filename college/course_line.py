@@ -5,6 +5,7 @@ import MySQLdb
 import random
 import time
 from lxml import etree
+import re
 import sys
 reload(sys)
 
@@ -160,9 +161,38 @@ class course_line():
         except:
             print '错误3, ', url
             self.wrong_url.append(url)
+    def ex(self):
+        r = self.session.get('http://gkcx.eol.cn/', headers=self.headers, timeout=10)
+        cookies = r.cookies
+        self.session.cookies.update(cookies)
+        # 建立mysql链接
+        self.conn = MySQLdb.connect(
+            host='localhost',
+            port=3306,
+            user='root',
+            passwd='454647',
+            db='college_info',
+            charset="utf8"
+        )
+        self.cur = self.conn.cursor()
+        text = open('demo').read()
+        ids = re.findall('specialty/(.*?)/', text, re.S)
+        self.wrong_url = []
+        for self.schoolid in ids:
+            print '抓取',self.schoolid,'的数据'
+            url = 'http://gkcx.eol.cn/schoolhtm/schoolSpecailtyMark/' + str(self.schoolid) + '/schoolSpecailtyMark.htm'
+            self.getEachCourse_url(url)
+            time.sleep(1)
+            self.conn.commit()
 
+        self.conn.close()
+        print '结束'
+        print '失效的链接有：'
+        for i in self.wrong_url:
+            print i
 
 
 if __name__ == '__main__':
     c = course_line()
-    c.setupsession()
+    # c.setupsession()
+    c.ex()
