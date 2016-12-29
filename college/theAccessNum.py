@@ -12,6 +12,7 @@ import random
 import MySQLdb
 import time
 from lxml import etree
+import re
 import sys
 reload(sys)
 
@@ -104,7 +105,7 @@ class theAccessNum():
             print school_name,area,s_type
             if selector.xpath('//div[@class="cont_l in"]/div[@class="ts"]'):
                 # 无数据，返回空的插入
-                SQL = 'insert into access_num(学校名称,地区,考生类别,是否为空)values(\'%s\',\'%s\',\'%s\',\'%s\')'\
+                SQL = 'insert into 各校各省录取人数(学校名称,地区,考生类别,是否为空)values(\'%s\',\'%s\',\'%s\',\'%s\')'\
                       % (school_name, area, s_type, 1)
                 self.cur.execute(SQL)
 
@@ -137,7 +138,7 @@ class theAccessNum():
                         admission_type = ''
 
                     if year != '':
-                        SQL = 'insert into access_num(学校名称,地区,考生类别,年份,最低,最高,平均,录取人数,录取批次,是否为空)' \
+                        SQL = 'insert into 各校各省录取人数(学校名称,地区,考生类别,年份,最低,最高,平均,录取人数,录取批次,是否为空)' \
                               'value(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
                               % (school_name, area, s_type, year, min, max, ave, num, admission_type, 0)
                         self.cur.execute(SQL)
@@ -146,6 +147,36 @@ class theAccessNum():
         except:
             print 'error,', url
             self.urls.append(url)
+    def ex(self):
+        headers = {
+            'Host': 'www.gaokao.com',
+            'User-Agent': random.choice(self.user_agent_list),
+        }
+        r = self.session.get('http://www.gaokao.com', headers=headers)
+        cookies = r.cookies
+        self.session.cookies.update(cookies)
+        # 建立mysql链接
+        self.conn = MySQLdb.connect(
+            host='localhost',
+            port=3306,
+            user='root',
+            passwd='454647',
+            db='college_info',
+            charset="utf8"
+        )
+        self.cur = self.conn.cursor()
+        self.urls = []
+        text = open('demo').read()
+        lists = re.findall('error, http://college.gaokao.com/school/tinfo/(.*?)\n', text, re.S)
+        for i in lists:
+            url = 'http://college.gaokao.com/school/tinfo/' + str(i)
+            print  url
+            # self.getData(url)
+            # time.sleep(1)
+        print '仍然无效的链接'
+        for p in self.urls:
+            print p
 if __name__ == '__main__':
     c =theAccessNum()
-    c.setupsession()
+    # c.setupsession()
+    c.ex()

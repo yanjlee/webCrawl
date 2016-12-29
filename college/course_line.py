@@ -97,18 +97,24 @@ class course_line():
                         if each_url.xpath('td[2]/a[' + str(year+1) +']/@href'):
                             li_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[2]/a[' + str(year+1) +']/@href')[0]
                             self.getData(li_url, province_name, self.schoolid)
+
                         if each_url.xpath('td[3]/a[' + str(year+1) +']/@href'):
                             wen_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[3]/a[' + str(year+1) +']/@href')[0]
                             self.getData(wen_url, province_name, self.schoolid)
+
                         if each_url.xpath('td[4]/a[' + str(year+1) +']/@href'):
                             zong_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[4]/a[' + str(year+1) +']/@href')[0]
                             self.getData(zong_url, province_name, self.schoolid)
+
                         if each_url.xpath('td[5]/a[' + str(year+1) +']/@href'):
                             yi_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[5]/a[' + str(year+1) +']/@href')[0]
                             self.getData(yi_url, province_name, self.schoolid)
+
                         if each_url.xpath('td[6]/a[' + str(year+1) +']/@href'):
                             ti_url = 'http://gkcx.eol.cn/' + each_url.xpath('td[6]/a[' + str(year+1) +']/@href')[0]
                             self.getData(ti_url, province_name, self.schoolid)
+
+
 
         except:
             print '错误2, ', url
