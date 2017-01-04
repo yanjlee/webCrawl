@@ -29,7 +29,12 @@ class p_rank():
             charset="utf8"
         )
         self.cur = self.conn.cursor()
-
+        print '建表中...',
+        SQL_data = 'create table 各省高校排名 (id int auto_increment primary key,省份 nvarchar(20),名次 nvarchar(10),学校名称' \
+                   ' nvarchar(20),所在地区 nvarchar(20),全国名次 nvarchar(10),总分 nvarchar(10),办学类型 nvarchar(20)' \
+                   ',星级排名 nvarchar(10),办学层次 nvarchar(10))'
+        self.cur.execute(SQL_data)
+        self.conn.commit()
     def setupsessoion(self):
         urls = [
             'http://kaoyan.eol.cn/bao_kao/re_men/201604/t20160413_1386469.shtml',
@@ -73,16 +78,10 @@ class p_rank():
         print '抓取结束'
         self.conn.close()
     def getdata(self, selector):
-        title = selector.xpath('/html/body/div[6]/div[1]/div[1]/p[1]/text()')[0].replace('，', ',').replace('最佳大学排行榜', '').replace('2016', '')
+        title = selector.xpath('/html/body/div[6]/div[1]/div[1]/p[1]/text()')[0].replace('，', ',')\
+            .replace('最佳大学排行榜', '').replace('2016', '')
         T = title.split(',')[0]
-        #没注意有两个commit() 因此数据被录入两遍
-        # p = 'truncate table %s'%(T)
-        # self.cur.execute(p)
-        print '建表中...',T
-        SQL_data = 'create table %s (id int auto_increment primary key,名次 nvarchar(10),学校名称 nvarchar(20),所在地区 nvarchar(20),' \
-                   '全国名次 nvarchar(10),总分 nvarchar(10),办学类型 nvarchar(20),星级排名 nvarchar(10),办学层次 nvarchar(10))' % (T)
-        # self.cur.execute(SQL_data)
-        # self.conn.commit()
+        print '录入',T
         content = selector.xpath('//*[@id="mcontent"]/div[1]/table/tbody/tr')
         for each_info in content:
             if each_info.xpath('td/b/text()'):
@@ -99,9 +98,10 @@ class p_rank():
                 type = each_info.xpath('td[6]/text()')[0]
                 rank_star = each_info.xpath('td[7]/text()')[0]
                 s_class = each_info.xpath('td[8]/text()')[0]
-                SQL = 'insert into %s (名次,学校名称,所在地区,全国名次,总分,办学类型,星级排名,办学层次)values' \
-                      '(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
-                      % (T, rank, name, area,rank_g, num, type, rank_star, s_class)
+                SQL = 'insert into 各省高校排名 (名次,省份,学校名称,所在地区,全国名次,总分,办学类型,星级排名,办学层次)values' \
+                      '(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')' \
+                      % (rank, T, name, area,rank_g, num, type, rank_star, s_class)
+                print SQL
                 self.cur.execute(SQL)
 
 

@@ -83,7 +83,7 @@ class getAllCollege():
                         school_url = each.xpath('a/@href')[0]
                         #转跳录入环节
                         self.insertData(property_name, school_url)
-                        
+
             #处理失效链接
             if self.prop_name:
                 self.ex()
