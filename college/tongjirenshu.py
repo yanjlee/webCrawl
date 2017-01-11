@@ -52,20 +52,31 @@ class tongji():
                 if each_info.xpath('td[7]/text()'):
                     nian14 = each_info.xpath('td[7]/text()')[0].replace('\n', '')
                 if each_info.xpath('td[8]/text()'):
-                    nian13 = each_info.xpath('td[7]/text()')[0].replace('\n', '')
+                    nian13 = each_info.xpath('td[8]/text()')[0].replace('\n', '')
                 if each_info.xpath('td[9]/text()'):
-                    nian12 = each_info.xpath('td[7]/text()')[0].replace('\n', '')
+                    nian12 = each_info.xpath('td[9]/text()')[0].replace('\n', '')
                 if each_info.xpath('td[10]/text()'):
-                    nian11 = each_info.xpath('td[7]/text()')[0].replace('\n', '')
+                    nian11 = each_info.xpath('td[10]/text()')[0].replace('\n', '')
                 if each_info.xpath('td[11]/text()'):
-                    nian10 = each_info.xpath('td[7]/text()')[0].replace('\n', '')
-                SQL = 'insert into tongjirenshu(省份,2016年人数,总数相比15年,16年统考生人数,统考生相比15年,2015年人数,2014年人数' \
-                      ',2013年人数,2012年人数,2011年人数,2010年人数)values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'' \
-                      ',\'%s\',\'%s\',\'%s\',\'%s\')' %(province, num, biqunian, tongkao, tong_qunian, nian15, nian14,
-                                                        nian13, nian12, nian11, nian10)
-                self.cur.execute(SQL)
-                self.conn.commit()
+                    nian10 = each_info.xpath('td[11]/text()')[0].replace('\n', '')
+                # SQL = 'insert into tongjirenshu(省份,2016年人数,总数相比15年,16年统考生人数,统考生相比15年,2015年人数,2014年人数' \
+                #       ',2013年人数,2012年人数,2011年人数,2010年人数)values(\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',\'%s\'' \
+                #       ',\'%s\',\'%s\',\'%s\',\'%s\')' %(province, num, biqunian, tongkao, tong_qunian, nian15, nian14,
+                #                                         nian13, nian12, nian11, nian10)
+                # self.cur.execute(SQL)
+                # self.conn.commit()
+                self.ex(province, nian10, nian11, nian12, nian13, nian14)
 
+    def ex(self, province, nian10, nian11, nian12, nian13, nian14):
+        # sql_s ='set sql_safe_updates=0'
+        # self.cur.execute(sql_s)
+        sql = 'update 各年各省参考人数统计 set 2010年人数=(\'%s\'),2011年人数=(\'%s\'),2012年人数=(\'%s\')' \
+              ',2013年人数=(\'%s\'),2014年人数=(\'%s\') where 省份=(\'%s\');'\
+              % (nian10, nian11, nian12, nian13, nian14, province)
+
+        print sql
+
+        # self.cur.execute(sql)
 
 
 if __name__ == '__main__':

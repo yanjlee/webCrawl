@@ -72,7 +72,7 @@ class getEachCollegeAccessNum():
                 # 转跳抓取网页
                 print '第', i+1, '所', schoolname
                 self.construction(url, schoolname)
-            time.sleep(1)
+            # time.sleep(1)
         #抓取结束，关闭链接
         self.conn.close()
     def construction(self, url, schoolname):
@@ -88,7 +88,7 @@ class getEachCollegeAccessNum():
                 'xkxsubmit': 'true'
             }
             self.getData(self.session.post(do_url, data=data).content, no, schoolname)
-            time.sleep(1)
+            # time.sleep(1)
 
         #在一个学校抓完31省数据后再commit
         self.conn.commit()

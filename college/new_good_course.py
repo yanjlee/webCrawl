@@ -97,3 +97,5 @@ class goodCourseOfEachCollege():
 if __name__ == '__main__':
     c = goodCourseOfEachCollege()
     c.setupsession()
+
+
