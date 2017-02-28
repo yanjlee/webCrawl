@@ -10,15 +10,18 @@
 >>####问题总结:
 
 * (02.28)保存图片时
+
 		from urllib import request
 		request.urlretrieve(url, filename='路径/名字.xx')
 * (02.28)保存文档时
+
 		xx = open('xxx', 'wt', newline='', encodig='utf-8')
 		# r 读, w 写，a 追加
 		wiht open('xxxx', 'w') as f:
 			f.write(xxxx)
 * (02.28)对于requests中text和content的对比，text是xxxin unicode，而content是xxxin bytes
 * (02.28)在构造headers过程中,host能不要放在外面就不要放在外面,但是对于通用爬虫还是要放外面的.
+
 		host = 'xxx.xxx.com'
 		header = {
 			'host': host,			
