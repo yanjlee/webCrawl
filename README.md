@@ -8,6 +8,7 @@
 ***
 
 >>####问题总结:
+
 * (02.28)保存图片时
 		from urllib import request
 		request.urlretrieve(url, filename='路径/名字.xx')
