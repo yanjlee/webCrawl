@@ -8,7 +8,23 @@
 ***
 
 >>####问题总结:
-
+* (02.28)保存图片时
+		from urllib import request
+		request.urlretrieve(url, filename='路径/名字.xx')
+* (02.28)保存文档时
+		xx = open('xxx', 'wt', newline='', encodig='utf-8')
+		# r 读, w 写，a 追加
+		wiht open('xxxx', 'w') as f:
+			f.write(xxxx)
+* (02.28)对于requests中text和content的对比，text是xxxin unicode，而content是xxxin bytes
+* (02.28)在构造headers过程中,host能不要放在外面就不要放在外面,但是对于通用爬虫还是要放外面的.
+		host = 'xxx.xxx.com'
+		header = {
+			'host': host,			
+			'xxxx': 'xxx'
+		}
+* (02.28)在python3 中,如果在文件的__init__文档里写模块,在正常的脚本里不能调用,还没想明白
+		from . import xxx
 * 在安装Python3后，pip就指代3，如果安装py2相关的要使用pip2才行，为了规范化，3->pip3,2->pip2 这样就不容易错
 * '@'符号用作函数修饰符，必须出现在函数定义前一行，不允许和函数定义在同一行。只可以在模块或类定义层内对函数进行修饰，不允许修修饰一个类。一个修饰符就是一个函数，它将被修饰的函数做为参数，并返回修饰后的同名函数或其它可调用的东西。
 * 实用的角度，for循环是嵌套在while里，如果反了，遇到break是整个循环停了，造成麻烦
@@ -27,6 +43,8 @@
 
 ***
 >##SCHEDULE
+
+>17.02.28 第一次用python3编写脚本,模仿框架,然后编写一个录入全国旅行社的脚本
 
 >17.02.27 卸载ubuntu,安装debain,熟悉脚本
 
