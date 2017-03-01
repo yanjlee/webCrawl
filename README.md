@@ -9,6 +9,15 @@
 
 >>####问题总结:
 
+* (03.01)关于代理ip
+
+		url1: http://www.kuaidaili.com/free
+		url2: http://www.xicidaili.com/nn
+		#使用方法
+		proxy = {
+			'http/https': 'http/https://xx.xx.xx:xxx'
+		}
+		#请求的时候放入requests里，单个爬虫用1-2个代理，多了回报错
 * (02.28)对于import对象时,Python3开始，import 默认只做absolute import。也就是说pack包内的__init__.py中如果有一句import my_package，Python3会去找一个叫my_package的包，而不会去找pack.my_package包。
 
 		try:
