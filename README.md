@@ -18,6 +18,7 @@
 			'http/https': 'http/https://xx.xx.xx:xxx'
 		}
 		#请求的时候放入requests里，单个爬虫用1-2个代理，多了回报错
+		#同时，选错proxy ip 程序也会停，应该是该代理不可用
 * (02.28)对于import对象时,Python3开始，import 默认只做absolute import。也就是说pack包内的__init__.py中如果有一句import my_package，Python3会去找一个叫my_package的包，而不会去找pack.my_package包。
 
 		try:
