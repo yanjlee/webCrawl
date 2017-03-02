@@ -9,6 +9,17 @@
 
 >>####问题总结:
 
+* (03.02)终于实现知乎的登录，通过获取cookies是行不通的，因为xsrf的不同。然后拿到新浪的api，在查询过程中
+
+		api_params = {
+    			'type': 'all',# 三种模式
+    			'queryVal': '四川旅游', #搜索词条
+    			'title': '四川旅游',
+    			'containerid': '100103type=1&q=四川旅游',
+    			'page': 15 #页数
+		}
+		#api地址
+		url = 'http://m.weibo.cn/container/getIndex'		
 * (03.01)关于代理ip
 
 		url1: http://www.kuaidaili.com/free
@@ -64,7 +75,8 @@
 ***
 >##SCHEDULE
 
->17.03.02 装机器，开始准备开始实际工作了
+>17.03.02 装机器，开始准备开始实际工作了,安装各种,抓取新浪的api
+
 >17.03.01 被debian坑了无数次，终于弃坑，毅然选择ubuntu
 >17.02.28 第一次用python3编写脚本,模仿框架,然后编写一个录入全国旅行社的脚本
 
