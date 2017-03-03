@@ -9,6 +9,7 @@
 ***
 
 >>####问题总结:
+* (03.03)python有个自动卸载 pip install pip-autoremove
 * (03.03)对于jupyter notebook不能用python情况
 
 		python2 -m pip install ipykernel
