@@ -4,11 +4,18 @@
 ***
 >>####反爬虫措施:
 
+* 在[欣欣旅游](http://lxs.cncn.com)这个网站ban了ip，迟迟不恢复，只能用代理ip来解决，每一次请求都先拿一个可以用的ip去请求 
 * 在[完美志愿](http://www.wmzy.com)这个网站的同考分去向数据抓取时候，通过post请求，data嵌入到cookies里，因此每次页面请求都是通过调用cookies参数来输出内容 
 ***
 
 >>####问题总结:
+* (03.03)对于jupyter notebook不能用python情况
 
+		python2 -m pip install ipykernel
+		python2 -m ipykernel install --user
+
+		python3 -m pip install ipykernel
+		python3 -m ipykernel install --user
 * (03.02)终于实现知乎的登录，通过获取cookies是行不通的，因为xsrf的不同。然后拿到新浪的api，在查询过程中
 
 		api_params = {
