@@ -10,6 +10,9 @@
 
 >>####问题总结:
 
+* (03.08)安装scrapy时,windows上要安装vc code,linux要报错 scripts/sign-file.c:23:30: fatal error: openssl/opensslv.h,ubuntu下缺少了部分如下的组件，安装一下即可
+	
+		sudo apt-get install libssl-dev
 * (03.08)对于错误,输出可以这样
 
 		try:
