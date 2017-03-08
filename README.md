@@ -9,6 +9,14 @@
 ***
 
 >>####问题总结:
+
+* (03.08)对于错误,输出可以这样
+
+		try:
+			xxxxx
+		except Exception as e:
+			print(e)
+			time.sleep(60)
 * (03.07)写脚本的时候,要遵循面向对象的原则,不要随意的继承,重写,以及类的唯一性
 * (03.03)python有个自动卸载 pip install pip-autoremove
 * (03.03)对于jupyter notebook不能用python情况
