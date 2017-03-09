@@ -38,7 +38,7 @@ class CtripSetting():
 
 #从list.txt列表里提取数据,放入list里
 class loadInList():
-    list_a = open('list.txt', 'r').readlines()
+    list_a = open('list.txt', 'r', encoding='utf-8').readlines()
     #去'\n'
     list_b = []
     for i in list_a:
@@ -59,8 +59,8 @@ class setUpSession(CtripSetting):
 
     def get_html(url):
         new_url = 'http://piao.ctrip.com' + url
-        # return setUpSession.session.get(new_url).text
-        return setUpSession.session.get('http://piao.ctrip.com/dest/t13720.html').text
+        return setUpSession.session.get(new_url).text
+        # return setUpSession.session.get('http://piao.ctrip.com/dest/t13720.html').text
 
 #先搜索一遍,存放数据,再进行抓取
 class getDataFromJson(setUpSession):
@@ -73,7 +73,7 @@ class getDataFromJson(setUpSession):
             response = setUpSession.get_json(each)
             self.dealJson(response)
             time.sleep(3)
-            break
+
     #将数据放入文档
     def dealJson(self, content):
         if json.loads(content)['SearchList']:
@@ -104,10 +104,13 @@ class getDataFromHtml(setUpSession):
         for eachline in text:
             name = eachline.split(self.column_split)[0]
             url = eachline.split(self.column_split)[1]
-            print(name, url)
+            # print(name, url)
             self.makeSession(name, url)
             time.sleep(3)
-
+        #抓取完毕
+        for i in self.error:
+            with open('erroe2.txt', 'a', encoding='utf-8') as f:
+                f.writelines( i+ '\n')
     def makeSession(self, name, url):
         response = setUpSession.get_html(url)
         self.spyder(name, response, url)
@@ -115,22 +118,28 @@ class getDataFromHtml(setUpSession):
     def spyder(self, name, response, url):
         try:
             selector = etree.HTML(response)
-            jd_name = selector.xpath('//div[@class="media-right"]/h2/text()')[0]
+            if selector.xpath('//div[@class="media-right"]/h2/text()'):
+                self.jd_name = selector.xpath('//div[@class="media-right"]/h2/text()')[0]
+            else:
+                self.jd_name = name
             if selector.xpath('//div[@class="media-right"]/span/text()'):
-                jd_star = selector.xpath('//div[@class="media-right"]/span')[0].xpath('string(.)')
+                self.jd_star = selector.xpath('//div[@class="media-right"]/span')[0].xpath('string(.)')
             if selector.xpath('//div[@class="media-right"]/ul/li[1]/span/text()'):
-                jd_loc = selector.xpath('//div[@class="media-right"]/ul/li[1]/span/text()')[0].\
+                self.jd_loc = selector.xpath('//div[@class="media-right"]/ul/li[1]/span/text()')[0].\
                     replace('\r\n', '').replace(' ', '')
             if selector.xpath('//div[@class="media-right"]/ul/li[2]/span/text()'):
-                jd_time = selector.xpath('//div[@class="media-right"]/ul/li[2]/span/text()')[0]
-            #景点简介
-            if selector.xpath('//div[@id="J-Jdjj"]/div[2]/div/p/text()'):
-                jd_tese = selector.xpath('//div[@id="J-Jdjj"]/div[2]/ul')[0].xpath('string(.)').\
+                self.jd_time = selector.xpath('//div[@class="media-right"]/ul/li[2]/span/text()')[0].replace('\r\n', '')
+            #景点特色
+            if selector.xpath('//div[@id="J-Jdjj"]/div[2]/ul'):
+                self.jd_tese = selector.xpath('//div[@id="J-Jdjj"]/div[2]/ul')[0].xpath('string(.)'). \
                     replace('\r\n', '').replace(' ', '')
-                jd_jj = selector.xpath('//div[@id="J-Jdjj"]/div[2]/div')[0].xpath('string(.)')
+            #景点简介
+            if selector.xpath('//div[@id="J-Jdjj"]/div[2]/div/text()'):
+                self.jd_jj = selector.xpath('//div[@id="J-Jdjj"]/div[2]/div')[0].xpath('string(.)').\
+                    replace('\r\n', '').replace(' ', '')
             #交通指南
             if selector.xpath('//div[@id="J-Jtzn"]/div[@class="feature-traffic"]/text()'):
-                jd_jt = selector.xpath('//div[@id="J-Jtzn"]/div[@class="feature-traffic"]')[0].xpath('string(.)').\
+                self.jd_jt = selector.xpath('//div[@id="J-Jtzn"]/div[@class="feature-traffic"]')[0].xpath('string(.)').\
                     replace('\r\n', '').replace(' ', '')
             self.get_position(response)
             self.save()
@@ -146,9 +155,10 @@ class getDataFromHtml(setUpSession):
             print(e)
 
     def save(self):
-        text = self.jd_name + self.column_split + self.jd_star + self.column_split + self.jd_loc + self.jd_jj +\
-               self.column_split + self.jd_time + self.column_split + self.jd_tese + self.column_split + self.jd_jt +\
-                self.jd_point + self.column_split
+        text = str(self.jd_name) + str(self.column_split) + str(self.jd_star) + str(self.column_split) + \
+               str(self.jd_loc) + str(self.jd_jj) + str(self.column_split) + str(self.jd_time) + str(self.column_split) \
+               + str(self.jd_tese) + str(self.column_split) + str(self.jd_jt) +\
+                str(self.jd_point) + str(self.column_split)
         with open('data2.txt', 'a', encoding='utf-8') as f:
             print(self.jd_name)
             f.writelines(text + '\n')
