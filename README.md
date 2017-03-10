@@ -12,8 +12,12 @@
 
 * (03.10)对于网页中的数据是unicode形式，提取出阿里要转换成中文就应该这样.
 		
-		t1 = xxxx.encdoe('utf-8') #其转换为utf-8
+		t1 = xxxx.encode('utf-8') #其转换为utf-8
 		t2 = t1.decode('unicode-escape') #将其转换为中文了
+如果是gbk方式的,那就
+		
+		t1 = xxxx.encode('raw_unicode_escape')
+		t2 = t1.decode('utf-8')
 * (03.08)安装scrapy时,windows上要安装vc code,linux要报错 scripts/sign-file.c:23:30: fatal error: openssl/opensslv.h,ubuntu下缺少了部分如下的组件，安装一下即可
 	
 		sudo apt-get install libssl-dev
