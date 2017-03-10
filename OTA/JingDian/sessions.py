@@ -15,8 +15,8 @@ class makeSession(headers):
         except Exception as e:
             print(e)
             with open('data/errorBaidu.txt', 'a', encoding='utf-8') as f:
-                f.writelines(e)
-                f.writelines('\n')
+                f.writelines(url + '\n')
+                
 
 
 
