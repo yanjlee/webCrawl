@@ -10,6 +10,15 @@
 
 >>####问题总结:
 
+* (03.10)关于变量
+
+		class TestClass():
+			val1 = xxx  		#这个是类变量,由 类名 直接调用,也可以又对象来调用
+			def __init__(self):
+				self.val2 = xxx #这个是成员变量,可又类的对象来调用,self的含义就是代表实例对象
+			def function(self):
+				vale = xxx 	#不是成员变量,只是function的内部变量
+			# 没有在构造函数里初始化的变量就算带self都不算成员变量
 * (03.10)对于类的调用时
 
 		#先定义了一个session对象
