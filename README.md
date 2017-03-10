@@ -10,6 +10,25 @@
 
 >>####问题总结:
 
+* (03.10)对于类的调用时
+
+		#先定义了一个session对象
+		class session():
+			def __init__(self):
+				self.session = requests.session()
+			def xxxx(self):
+				r = self.session.get(xxx)
+			....
+		#错误的调用方法
+		class A():
+			def run():
+				response = session.xxxx()
+			#这里会报错,说 A中没有 session这个属性,原因是仅仅是调用方法,self.session还没有生成
+		#正确的方法
+		class B():
+			def run():
+				rs = session() #先实例化session这个对象，构造函数才会被调用
+				rs.xxxxx()     #此时就正确调用了
 * (03.10)对于网页中的数据是unicode形式，提取出阿里要转换成中文就应该这样.
 		
 		t1 = xxxx.encode('utf-8') #其转换为utf-8
