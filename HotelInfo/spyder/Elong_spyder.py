@@ -146,9 +146,9 @@ class Elong_spyder():
     def get_hotel_room_data(self, content, cnc, anc, hid):
         jcon = json.loads(content)["value"]["content"]
         selector = etree.HTML(jcon)
-        content = selector.xpath('//div[@class="htype_item on"]')
+        con = selector.xpath('//div[@class="htype_item on"]')
 
-        for each in content:
+        for each in con:
             f = ''
             # 类型
             rtype = each.xpath('div[2]/div[3]/p[1]/span/text()')
@@ -166,9 +166,25 @@ class Elong_spyder():
             f += '\u0001' + each.xpath('div[2]/div[2]/p[1]')[0].xpath('string(.)').replace('\n', '').replace(' ', '')
             # 额外信息
             f += '\u0001' + each.xpath('div[3]/table/tbody/tr[@class="ht_tr_other"]/td[2]')[0].xpath('string(.)'). \
-                replace('\n', '').replace('\t', '').replace('\r', '')
+                replace('\n', '').replace('\t', '').replace('\r', '。')
+            #获取加床费
+            if each.xpath('div[1]/p/@data-sroomid'):
+                fee = self.judge_fee(content, each.xpath('div[1]/p/@data-sroomid')[0])
+                if fee:
+                    fee = fee
+                else:
+                    fee = '不提供加床服务。'
+            else:
+                fee = '不提供加床服务。'
+            f += '\u0001' + fee
             text = cnc + '\u0001' + anc + '\u0001' + hid + '\u0001' + f + '\u0001' + '\n'
             self.save_hr(text)
+
+    def judge_fee(self, content, numb):
+        jsDict = json.loads(content)["value"]["hotelTipInfo"]["productsInfo"]
+        for each in jsDict:
+            if each["sRoomID"] == numb:
+                return each["productAttachDesc"][0]["value"]
 
 
 

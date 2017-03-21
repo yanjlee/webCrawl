@@ -110,8 +110,8 @@ class Elong(object):
             aid = list[3]
             anc = list[4]
             hid = list[5]
-            self.get_hotel_base_data(cnc, cne, aid, anc, hid)
-            # self.get_hotel_room_data(cne, hid, cid, anc, cnc)
+            # self.get_hotel_base_data(cnc, cne, aid, anc, hid)
+            self.get_hotel_room_data(cne, hid, cid, anc, cnc)
 
     def get_hotel_base_data(self, cnc, cne, aid, anc, hid):
         host = 'hotel.elong.com'
@@ -125,6 +125,7 @@ class Elong(object):
     def get_hotel_room_data(self, cne, hid, cid, anc, cnc):
         r = self.response.post_data_2_get_room_info(cne, hid, cid)
         self.deal_hotel_room_data(r, cnc, anc, hid)
+
     def deal_hotel_room_data(self, r, cnc, anc, hid):
         self.esp.get_hotel_room_data(r, cnc, anc, hid)
 

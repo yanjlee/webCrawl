@@ -48,11 +48,12 @@ class makeSession(headers):
         #     return False
     def get_info_from_hotel(self, host, url):
         headers = self.__header.consHeaders(host)
-        time.sleep(3)
+        time.sleep(10)
         return self.__session.get(url).content.decode('utf-8')
 
     def post_data_2_get_room_info(self, cne, hotelid, cid):
         referer = 'http://hotel.elong.com/' + cne + '/' + hotelid + '/'
+        time.sleep(10)
         #必须要带referer和x-requested-with
         headers = {
             'Host': 'hotel.elong.com',
