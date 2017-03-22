@@ -10,6 +10,11 @@
 
 >>####问题总结:
 
+* (03.22)关于 os 这个模块.
+        
+        os.path.join(path,name)   #连接目录与文件名或目录 结果为path/name
+        os.path.abspath(path)    #显示当前绝对路径
+        os.path.split(path)  #将path分割成路径名和文件名。
 * (03.20)对于需要一个list如何如何，用完一定要重置，不然要发生错乱。
 * (03.10)关于变量
 
