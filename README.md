@@ -12,9 +12,9 @@
 
 * (03.22)关于 os 这个模块.
         
-        os.path.join(path,name)   #连接目录与文件名或目录 结果为path/name
-        os.path.abspath(path)    #显示当前绝对路径
-        os.path.split(path)  #将path分割成路径名和文件名。
+		os.path.join(path,name)   #连接目录与文件名或目录 结果为path/name
+		os.path.abspath(path)    #显示当前绝对路径
+		os.path.split(path)  #将path分割成路径名和文件名。
 * (03.20)对于需要一个list如何如何，用完一定要重置，不然要发生错乱。
 * (03.10)关于变量
 
@@ -136,6 +136,8 @@
 
 ***
 >##SCHEDULE
+
+>17.03.23 这周,开发了酒店数据框架和全国景点框架
 
 >17.03.16 每天都很忙啊，自己的框架自己写。
 
