@@ -19,6 +19,20 @@ class headers():
         }
         return headers
 
+    '''新添加项到headers'''
+
+    def re_consHeaders(self, content, newKey, newValue):
+        self.__host = content
+        headers = {
+            'Host': self.__host,
+            'User-Agent': random.choice(USER_AGENT_LIST),
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Encoding': 'gzip, deflate, sdch, br',
+            'Accept-Language': 'zh-CN,zh;q=0.8',
+        }
+        headers[newKey] = newValue
+        return headers
+
 
 #作为UA的存在
 USER_AGENT_LIST = [
