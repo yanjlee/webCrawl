@@ -4,23 +4,21 @@ import json
 import re
 from lxml import etree
 from HotelInfo.pipeline import Ctrip_pipe
-import requests
+
+
 class ctrip_spyder():
     def __init__(self):
         self.pipeline = Ctrip_pipe()
     def get_data_of_cities(self, content):
-        selector = etree.HTML(content)
-        cons = selector.xpath('//div[@class="city_item"]/div[@class="city_item_in"]')
         data = []
-        for each in cons:
-            num = len(each.xpath('a/text()'))
-            for i in range(num):
-                city = {}
-                city['cnc'] = each.xpath('a/text()')[i]
-                city['cne'] = each.xpath('a/@title')[i]
-                city['cid'] = each.xpath('a/@data-id')[i]
-                data.append(city)
-
+        cities = re.findall('ABCD:(.*)', content, re.S)[0]
+        cities_list = re.findall('\{display(.*?)group', cities, re.S)
+        for each in cities_list:
+            city = {}
+            city['cnc'] = re.findall(':"(.*?)",',each, re.S)[0]
+            city['cne'] = re.findall('data:"(.*?)'+ city['cnc'],each, re.S)[0].replace('|', '')
+            city['cid'] = re.findall('(\d{1,10})"', each, re.S)[0]
+            data.append(city)
         return self.pipeline.get_list_data(data)
 
     def get_xzq_data(self, content):

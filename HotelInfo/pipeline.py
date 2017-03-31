@@ -12,9 +12,9 @@ class Ctrip_pipe():
             text = each['cnc'] + '\u0001' + each['cne'] + '\u0001' + each['cid'] + '\u0001'
             self.save_data_as_cities(text)
     #
-    # def save_data_as_cities(self, text):
-    #     with open(os.path.join(os.path.abspath("Data"), "Ctrip_cities_code.txt"), 'a', encoding='utf-8') as f:
-    #         f.writelines(text + '\n')
+    def save_data_as_cities(self, text):
+        with open(os.path.join(os.path.abspath("Data"), "Ctrip_cities_code.txt"), 'a', encoding='utf-8') as f:
+            f.writelines(text + '\n')
     '''---------------各城市行政区------------------'''
     def get_city_info(self):
         for each in open(os.path.join(os.path.abspath("Data"), "Ctrip_cities_code.txt"), 'r', encoding='utf-8'):
@@ -70,7 +70,8 @@ class Ctrip_pipe():
             dict['cityPY'] = cons[1]
             dict['location'] = cons[4]
         return dict
-
+    def deal_each_hotel_id(self, content):
+        return content.split('\u0001')[2]
     def do_judge(self, content):
         try:
             dict = {}  # 作为数据返回用的字典

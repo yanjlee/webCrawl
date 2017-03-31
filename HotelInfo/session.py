@@ -75,12 +75,11 @@ class makeSession(headers):
 
     '''----------------------------分割线-------------------------------------'''
     def get_home_page_from_Ctrip(self):
-        host = 'www.ctrip.com'
-        url = 'http://www.ctrip.com/'
+        host = 'hotels.ctrip.com'
+        url = 'http://hotels.ctrip.com/Domestic/Tool/AjaxGetCitySuggestion.aspx'
         headers = self.__header.consHeaders(host)
         response = self.__session.get(url, headers=headers)
         #更新cookies
-        self.__session.cookies.update(response.cookies)
         return response.text
 
     def get_city_html(self, dict):
@@ -95,9 +94,13 @@ class makeSession(headers):
                 'city': cid,
                 'markType': '3'
             }
+            proxies = {
+                'http': '112.91.135.115:8080',
+                'http': '61.186.164.97:8080'
+            }
             url = 'http://hotels.ctrip.com/Domestic/Tool/AjaxShowMoreDiv.aspx'
             time.sleep(3)
-            city_html = self.__session.post(url,headers=headers, data=data, timeout=60).text
+            city_html = self.__session.post(url,headers=headers, data=data, proxies=proxies, timeout=60).text
             html = '<div class="city" py="' + cne + '" id="' + cid + '">' + cnc + '</div>' + city_html
             return html
         except Exception as e:
@@ -127,7 +130,7 @@ class makeSession(headers):
                 'http': '61.186.164.97:8080'
             }
             time.sleep(5)
-            r = requests.get(url, headers=headers, data=data, timeout=30)
+            r = requests.get(url, headers=headers, data=data, proxies=proxies, timeout=30)
             return r.text
         except Exception as e:
             print(e)
