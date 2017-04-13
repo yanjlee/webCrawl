@@ -1,0 +1,410 @@
+<html>
+<body>
+<div name="北京">
+    <a href="javascript:;" val="514">北京</a>
+</div>
+<div name="安徽">
+    <a href="javascript:;" val="189">合肥</a>
+    <a href="javascript:;" val="182">滁州</a>
+    <a href="javascript:;" val="179">宿州</a>
+    <a href="javascript:;" val="186">安庆</a>
+    <a href="javascript:;" val="181">六安</a>
+    <a href="javascript:;" val="187">蚌埠</a>
+    <a href="javascript:;" val="391">亳州</a>
+    <a href="javascript:;" val="184">阜阳</a>
+    <a href="javascript:;" val="188">芜湖</a>
+    <a href="javascript:;" val="176">宣城</a>
+    <a href="javascript:;" val="177">巢湖</a>
+    <a href="javascript:;" val="173">铜陵</a>
+    <a href="javascript:;" val="178">淮南</a>
+    <a href="javascript:;" val="185">马鞍山</a>
+    <a href="javascript:;" val="183">淮北</a>
+    <a href="javascript:;" val="174">黄山</a>
+    <a href="javascript:;" val="175">池州</a>
+</div>
+<div name="澳门">
+    <a href="javascript:;" val="664">澳门</a>
+</div>
+<div name="重庆">
+    <a href="javascript:;" val="11">重庆</a>
+</div>
+<div name="福建">
+    <a href="javascript:;" val="50">福州</a>
+    <a href="javascript:;" val="55">泉州</a>
+    <a href="javascript:;" val="54">厦门</a>
+    <a href="javascript:;" val="56">漳州</a>
+    <a href="javascript:;" val="87">宁德</a>
+    <a href="javascript:;" val="52">三明</a>
+    <a href="javascript:;" val="51">莆田</a>
+    <a href="javascript:;" val="253">南平</a>
+    <a href="javascript:;" val="53">龙岩</a>
+</div>
+<div name="广东">
+    <a href="javascript:;" val="95">广州</a>
+    <a href="javascript:;" val="94">深圳</a>
+    <a href="javascript:;" val="196">佛山</a>
+    <a href="javascript:;" val="199">惠州</a>
+    <a href="javascript:;" val="212">汕头</a>
+    <a href="javascript:;" val="133">东莞</a>
+    <a href="javascript:;" val="203">茂名</a>
+    <a href="javascript:;" val="198">江门</a>
+    <a href="javascript:;" val="200">珠海</a>
+    <a href="javascript:;" val="197">湛江</a>
+    <a href="javascript:;" val="209">肇庆</a>
+    <a href="javascript:;" val="205">揭阳</a>
+    <a href="javascript:;" val="207">中山</a>
+    <a href="javascript:;" val="201">韶关</a>
+    <a href="javascript:;" val="202">阳江</a>
+    <a href="javascript:;" val="195">云浮</a>
+    <a href="javascript:;" val="211">梅州</a>
+    <a href="javascript:;" val="208">清远</a>
+    <a href="javascript:;" val="204">潮州</a>
+    <a href="javascript:;" val="213">汕尾</a>
+    <a href="javascript:;" val="210">河源</a>
+</div>
+<div name="甘肃">
+    <a href="javascript:;" val="166">兰州</a>
+    <a href="javascript:;" val="283">武威</a>
+    <a href="javascript:;" val="285">张掖</a>
+    <a href="javascript:;" val="286">嘉峪关</a>
+    <a href="javascript:;" val="308">天水</a>
+    <a href="javascript:;" val="307">平凉</a>
+    <a href="javascript:;" val="344">陇南</a>
+    <a href="javascript:;" val="281">庆阳</a>
+    <a href="javascript:;" val="282">定西</a>
+    <a href="javascript:;" val="284">酒泉</a>
+    <a href="javascript:;" val="309">白银</a>
+    <a href="javascript:;" val="343">金昌</a>
+    <a href="javascript:;" val="346">临夏</a>
+</div>
+<div name="广西">
+    <a href="javascript:;" val="90">南宁</a>
+    <a href="javascript:;" val="89">柳州</a>
+    <a href="javascript:;" val="91">桂林</a>
+    <a href="javascript:;" val="131">百色</a>
+    <a href="javascript:;" val="119">河池</a>
+    <a href="javascript:;" val="132">梧州</a>
+    <a href="javascript:;" val="93">贵港</a>
+    <a href="javascript:;" val="118">玉林</a>
+    <a href="javascript:;" val="128">北海</a>
+    <a href="javascript:;" val="129">钦州</a>
+    <a href="javascript:;" val="506">来宾</a>
+    <a href="javascript:;" val="92">贺州</a>
+    <a href="javascript:;" val="130">防城港</a>
+</div>
+<div name="贵州">
+    <a href="javascript:;" val="2">贵阳</a>
+    <a href="javascript:;" val="59">遵义</a>
+    <a href="javascript:;" val="4">六盘水</a>
+    <a href="javascript:;" val="3">黔南</a>
+    <a href="javascript:;" val="426">毕节</a>
+    <a href="javascript:;" val="424">安顺</a>
+    <a href="javascript:;" val="422">铜仁</a>
+    <a href="javascript:;" val="61">黔东南</a>
+    <a href="javascript:;" val="588">黔西南</a>
+</div>
+<div name="河北">
+    <a href="javascript:;" val="141">石家庄</a>
+    <a href="javascript:;" val="261">唐山</a>
+    <a href="javascript:;" val="259">保定</a>
+    <a href="javascript:;" val="148">沧州</a>
+    <a href="javascript:;" val="292">邯郸</a>
+    <a href="javascript:;" val="143">衡水</a>
+    <a href="javascript:;" val="146">秦皇岛</a>
+    <a href="javascript:;" val="147">廊坊</a>
+    <a href="javascript:;" val="293">邢台</a>
+    <a href="javascript:;" val="145">承德</a>
+    <a href="javascript:;" val="144">张家口</a>
+</div>
+<div name="黑龙江">
+    <a href="javascript:;" val="152">哈尔滨</a>
+    <a href="javascript:;" val="153">大庆</a>
+    <a href="javascript:;" val="324">绥化</a>
+    <a href="javascript:;" val="319">齐齐哈尔</a>
+    <a href="javascript:;" val="320">佳木斯</a>
+    <a href="javascript:;" val="322">牡丹江</a>
+    <a href="javascript:;" val="300">黑河</a>
+    <a href="javascript:;" val="323">鸡西</a>
+    <a href="javascript:;" val="295">伊春</a>
+    <a href="javascript:;" val="301">鹤岗</a>
+    <a href="javascript:;" val="359">双鸭山</a>
+    <a href="javascript:;" val="302">七台河</a>
+    <a href="javascript:;" val="297">大兴安岭</a>
+</div>
+<div name="河南">
+    <a href="javascript:;" val="168">郑州</a>
+    <a href="javascript:;" val="378">洛阳</a>
+    <a href="javascript:;" val="262">南阳</a>
+    <a href="javascript:;" val="263">新乡</a>
+    <a href="javascript:;" val="373">信阳</a>
+    <a href="javascript:;" val="370">安阳</a>
+    <a href="javascript:;" val="266">平顶山</a>
+    <a href="javascript:;" val="371">驻马店</a>
+    <a href="javascript:;" val="265">焦作</a>
+    <a href="javascript:;" val="381">三门峡</a>
+    <a href="javascript:;" val="375">周口</a>
+    <a href="javascript:;" val="268">许昌</a>
+    <a href="javascript:;" val="264">开封</a>
+    <a href="javascript:;" val="376">商丘</a>
+    <a href="javascript:;" val="380">濮阳</a>
+    <a href="javascript:;" val="379">漯河</a>
+    <a href="javascript:;" val="374">鹤壁</a>
+</div>
+<div name="湖南">
+    <a href="javascript:;" val="43">长沙</a>
+    <a href="javascript:;" val="46">株洲</a>
+    <a href="javascript:;" val="45">衡阳</a>
+    <a href="javascript:;" val="49">郴州</a>
+    <a href="javascript:;" val="68">常德</a>
+    <a href="javascript:;" val="44">岳阳</a>
+    <a href="javascript:;" val="269">永州</a>
+    <a href="javascript:;" val="405">邵阳</a>
+    <a href="javascript:;" val="67">怀化</a>
+    <a href="javascript:;" val="48">益阳</a>
+    <a href="javascript:;" val="47">湘潭</a>
+    <a href="javascript:;" val="66">娄底</a>
+    <a href="javascript:;" val="226">张家界</a>
+    <a href="javascript:;" val="65">湘西</a>
+</div>
+<div name="湖北">
+    <a href="javascript:;" val="28">武汉</a>
+    <a href="javascript:;" val="35">宜昌</a>
+    <a href="javascript:;" val="31">荆州</a>
+    <a href="javascript:;" val="32">襄樊</a>
+    <a href="javascript:;" val="36">十堰</a>
+    <a href="javascript:;" val="34">荆门</a>
+    <a href="javascript:;" val="33">黄冈</a>
+    <a href="javascript:;" val="41">孝感</a>
+    <a href="javascript:;" val="30">黄石</a>
+    <a href="javascript:;" val="40">咸宁</a>
+    <a href="javascript:;" val="38">恩施</a>
+    <a href="javascript:;" val="37">随州</a>
+    <a href="javascript:;" val="39">鄂州</a>
+    <a href="javascript:;" val="42">仙桃</a>
+    <a href="javascript:;" val="74">潜江</a>
+    <a href="javascript:;" val="73">天门</a>
+</div>
+<div name="海南">
+    <a href="javascript:;" val="239">海口</a>
+    <a href="javascript:;" val="243">三亚</a>
+    <a href="javascript:;" val="244">儋州</a>
+    <a href="javascript:;" val="241">万宁</a>
+    <a href="javascript:;" val="582">五指山</a>
+    <a href="javascript:;" val="242">琼海</a>
+    <a href="javascript:;" val="456">东方</a>
+</div>
+<div name="吉林">
+    <a href="javascript:;" val="154">长春</a>
+    <a href="javascript:;" val="270">吉林</a>
+    <a href="javascript:;" val="525">延边</a>
+    <a href="javascript:;" val="155">四平</a>
+    <a href="javascript:;" val="410">白城</a>
+    <a href="javascript:;" val="407">通化</a>
+    <a href="javascript:;" val="194">松原</a>
+    <a href="javascript:;" val="408">白山</a>
+    <a href="javascript:;" val="191">辽源</a>
+</div>
+<div name="江苏">
+    <a href="javascript:;" val="126">苏州</a>
+    <a href="javascript:;" val="125">南京</a>
+    <a href="javascript:;" val="127">无锡</a>
+    <a href="javascript:;" val="161">徐州</a>
+    <a href="javascript:;" val="169">镇江</a>
+    <a href="javascript:;" val="160">盐城</a>
+    <a href="javascript:;" val="163">南通</a>
+    <a href="javascript:;" val="162">常州</a>
+    <a href="javascript:;" val="158">扬州</a>
+    <a href="javascript:;" val="159">泰州</a>
+    <a href="javascript:;" val="156">连云港</a>
+    <a href="javascript:;" val="172">宿迁</a>
+    <a href="javascript:;" val="157">淮安</a>
+</div>
+<div name="江西">
+    <a href="javascript:;" val="5">南昌</a>
+    <a href="javascript:;" val="10">赣州</a>
+    <a href="javascript:;" val="6">九江</a>
+    <a href="javascript:;" val="9">上饶</a>
+    <a href="javascript:;" val="137">景德镇</a>
+    <a href="javascript:;" val="115">吉安</a>
+    <a href="javascript:;" val="7">鹰潭</a>
+    <a href="javascript:;" val="256">宜春</a>
+    <a href="javascript:;" val="8">抚州</a>
+    <a href="javascript:;" val="136">萍乡</a>
+    <a href="javascript:;" val="246">新余</a>
+</div>
+<div name="辽宁">
+    <a href="javascript:;" val="150">沈阳</a>
+    <a href="javascript:;" val="29">大连</a>
+    <a href="javascript:;" val="217">锦州</a>
+    <a href="javascript:;" val="215">鞍山</a>
+    <a href="javascript:;" val="224">辽阳</a>
+    <a href="javascript:;" val="219">丹东</a>
+    <a href="javascript:;" val="221">营口</a>
+    <a href="javascript:;" val="220">本溪</a>
+    <a href="javascript:;" val="218">铁岭</a>
+    <a href="javascript:;" val="222">抚顺</a>
+    <a href="javascript:;" val="216">朝阳</a>
+    <a href="javascript:;" val="223">阜新</a>
+    <a href="javascript:;" val="225">葫芦岛</a>
+    <a href="javascript:;" val="151">盘锦</a>
+</div>
+<div name="内蒙古">
+    <a href="javascript:;" val="20">呼和浩特</a>
+    <a href="javascript:;" val="25">呼伦贝尔</a>
+    <a href="javascript:;" val="21">赤峰</a>
+    <a href="javascript:;" val="13">包头</a>
+    <a href="javascript:;" val="15">巴彦淖尔</a>
+    <a href="javascript:;" val="22">通辽</a>
+    <a href="javascript:;" val="14">鄂尔多斯</a>
+    <a href="javascript:;" val="16">乌海</a>
+    <a href="javascript:;" val="331">乌兰察布</a>
+    <a href="javascript:;" val="333">兴安盟</a>
+    <a href="javascript:;" val="19">锡林郭勒盟</a>
+    <a href="javascript:;" val="17">阿拉善盟</a>
+</div>
+<div name="宁夏">
+    <a href="javascript:;" val="140">银川</a>
+    <a href="javascript:;" val="395">吴忠</a>
+    <a href="javascript:;" val="472">石嘴山</a>
+    <a href="javascript:;" val="396">固原</a>
+    <a href="javascript:;" val="480">中卫</a>
+</div>
+<div name="青海">
+    <a href="javascript:;" val="139">西宁</a>
+    <a href="javascript:;" val="608">海西</a>
+    <a href="javascript:;" val="659">玉树</a>
+    <a href="javascript:;" val="652">海东</a>
+</div>
+<div name="上海">
+    <a href="javascript:;" val="57">上海</a>
+</div>
+<div name="四川">
+    <a href="javascript:;" val="97">成都</a>
+    <a href="javascript:;" val="98">绵阳</a>
+    <a href="javascript:;" val="107">乐山</a>
+    <a href="javascript:;" val="106">德阳</a>
+    <a href="javascript:;" val="103">泸州</a>
+    <a href="javascript:;" val="113">达州</a>
+    <a href="javascript:;" val="291">眉山</a>
+    <a href="javascript:;" val="111">自贡</a>
+    <a href="javascript:;" val="104">南充</a>
+    <a href="javascript:;" val="102">内江</a>
+    <a href="javascript:;" val="96">宜宾</a>
+    <a href="javascript:;" val="108">广安</a>
+    <a href="javascript:;" val="114">雅安</a>
+    <a href="javascript:;" val="109">资阳</a>
+    <a href="javascript:;" val="99">广元</a>
+    <a href="javascript:;" val="100">遂宁</a>
+    <a href="javascript:;" val="112">攀枝花</a>
+    <a href="javascript:;" val="101">巴中</a>
+    <a href="javascript:;" val="417">甘孜</a>
+    <a href="javascript:;" val="479">凉山</a>
+    <a href="javascript:;" val="457">阿坝</a>
+</div>
+<div name="山东">
+    <a href="javascript:;" val="1">济南</a>
+    <a href="javascript:;" val="77">青岛</a>
+    <a href="javascript:;" val="80">潍坊</a>
+    <a href="javascript:;" val="78">烟台</a>
+    <a href="javascript:;" val="79">临沂</a>
+    <a href="javascript:;" val="81">淄博</a>
+    <a href="javascript:;" val="353">泰安</a>
+    <a href="javascript:;" val="352">济宁</a>
+    <a href="javascript:;" val="83">聊城</a>
+    <a href="javascript:;" val="82">东营</a>
+    <a href="javascript:;" val="88">威海</a>
+    <a href="javascript:;" val="86">德州</a>
+    <a href="javascript:;" val="76">滨州</a>
+    <a href="javascript:;" val="356">莱芜</a>
+    <a href="javascript:;" val="85">枣庄</a>
+    <a href="javascript:;" val="84">菏泽</a>
+    <a href="javascript:;" val="366">日照</a>
+</div>
+<div name="山西">
+    <a href="javascript:;" val="231">太原</a>
+    <a href="javascript:;" val="233">运城</a>
+    <a href="javascript:;" val="237">吕梁</a>
+    <a href="javascript:;" val="230">晋中</a>
+    <a href="javascript:;" val="232">临汾</a>
+    <a href="javascript:;" val="227">大同</a>
+    <a href="javascript:;" val="234">晋城</a>
+    <a href="javascript:;" val="228">长治</a>
+    <a href="javascript:;" val="229">忻州</a>
+    <a href="javascript:;" val="236">阳泉</a>
+    <a href="javascript:;" val="235">朔州</a>
+</div>
+<div name="陕西">
+    <a href="javascript:;" val="165">西安</a>
+    <a href="javascript:;" val="275">渭南</a>
+    <a href="javascript:;" val="277">咸阳</a>
+    <a href="javascript:;" val="273">宝鸡</a>
+    <a href="javascript:;" val="276">汉中</a>
+    <a href="javascript:;" val="278">榆林</a>
+    <a href="javascript:;" val="272">安康</a>
+    <a href="javascript:;" val="401">延安</a>
+    <a href="javascript:;" val="274">商洛</a>
+    <a href="javascript:;" val="271">铜川</a>
+</div>
+<div name="天津">
+    <a href="javascript:;" val="164">天津</a>
+</div>
+<div name="台湾">
+    <a href="javascript:;" val="931">台湾</a>
+</div>
+<div name="西藏">
+    <a href="javascript:;" val="466">拉萨</a>
+    <a href="javascript:;" val="655">那曲</a>
+    <a href="javascript:;" val="656">林芝</a>
+    <a href="javascript:;" val="516">日喀则</a>
+</div>
+<div name="香港">
+    <a href="javascript:;" val="663">香港</a>
+</div>
+<div name="新疆">
+    <a href="javascript:;" val="467">乌鲁木齐</a>
+    <a href="javascript:;" val="280">石河子</a>
+    <a href="javascript:;" val="563">塔城</a>
+    <a href="javascript:;" val="317">克拉玛依</a>
+    <a href="javascript:;" val="315">阿克苏</a>
+    <a href="javascript:;" val="499">巴音郭楞</a>
+    <a href="javascript:;" val="312">哈密</a>
+    <a href="javascript:;" val="383">阿勒泰</a>
+    <a href="javascript:;" val="311">昌吉</a>
+    <a href="javascript:;" val="660">伊犁哈萨克</a>
+    <a href="javascript:;" val="310">吐鲁番</a>
+    <a href="javascript:;" val="318">博尔塔拉</a>
+    <a href="javascript:;" val="384">喀什</a>
+    <a href="javascript:;" val="653">克孜勒苏柯尔克孜</a>
+    <a href="javascript:;" val="386">和田</a>
+    <a href="javascript:;" val="520">伊犁</a>
+    <a href="javascript:;" val="661">五家渠</a>
+</div>
+<div name="云南">
+    <a href="javascript:;" val="117">昆明</a>
+    <a href="javascript:;" val="337">红河</a>
+    <a href="javascript:;" val="123">玉溪</a>
+    <a href="javascript:;" val="339">曲靖</a>
+    <a href="javascript:;" val="334">大理</a>
+    <a href="javascript:;" val="437">文山</a>
+    <a href="javascript:;" val="438">保山</a>
+    <a href="javascript:;" val="342">丽江</a>
+    <a href="javascript:;" val="335">昭通</a>
+    <a href="javascript:;" val="662">思茅</a>
+    <a href="javascript:;" val="350">临沧</a>
+    <a href="javascript:;" val="124">楚雄</a>
+</div>
+<div name="浙江">
+    <a href="javascript:;" val="138">杭州</a>
+    <a href="javascript:;" val="149">温州</a>
+    <a href="javascript:;" val="289">宁波</a>
+    <a href="javascript:;" val="135">金华</a>
+    <a href="javascript:;" val="287">台州</a>
+    <a href="javascript:;" val="304">嘉兴</a>
+    <a href="javascript:;" val="303">绍兴</a>
+    <a href="javascript:;" val="305">湖州</a>
+    <a href="javascript:;" val="134">丽水</a>
+    <a href="javascript:;" val="288">衢州</a>
+    <a href="javascript:;" val="306">舟山</a>
+</div>
+</body>
+</html>
